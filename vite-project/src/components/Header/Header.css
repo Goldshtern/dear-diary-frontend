@@ -1,0 +1,167 @@
+.header {
+  display: flex;
+  justify-content: space-between; /* Spread items across the row */
+  align-items: center; /* Center items vertically */
+  padding: 30px 0 50px;
+}
+
+.header__logo-and-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px; /* Spacing between logo and title */
+}
+
+.header__logo {
+  max-width: 80px;
+}
+
+.header__title-container {
+  display: flex;
+  flex-direction: column; /* Stack title and date */
+}
+
+.header__title {
+  font-family: "Playfair Display", "Poppins", sans-serif;
+  font-size: 50px;
+  color: blue;
+}
+
+.header__date {
+  font-family: "DM Sans", "Space Grotesk", sans-serif;
+  font-size: 20px;
+  color: darkred;
+  font-weight: 700;
+}
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px; /* Spacing between buttons and user info */
+}
+
+.header__about-wrapper {
+  position: relative; /* Required for sliding About window */
+}
+
+.header__about-btn {
+  font-family: "DM Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0044cc;
+  border: 2px solid #0044cc;
+  border-radius: 4px;
+  background: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.header__about-btn:hover {
+  background-color: #0044cc;
+  color: white;
+}
+
+.header__add-diary-page-btn {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 700;
+  color: #333;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 16px;
+}
+
+.header__user-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+  }
+
+  .header__logo-and-title {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header__title {
+    font-size: 36px;
+  }
+
+  .header__date {
+    font-size: 16px;
+  }
+
+  .header__actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .header__about-btn {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+
+  .header__add-diary-page-btn {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+
+  .header__user-container {
+    margin-top: 12px;
+  }
+}
+
+/* Mobile view (up to 320px) */
+@media (max-width: 320px) {
+  .header {
+    padding: 10px;
+  }
+
+  .header__logo {
+    max-width: 60px;
+  }
+
+  .header__title {
+    font-size: 28px;
+  }
+
+  .header__date {
+    font-size: 14px;
+  }
+
+  .header__actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .header__about-btn {
+    font-size: 12px;
+    padding: 4px 10px;
+  }
+
+  .header__add-diary-page-btn {
+    font-size: 12px;
+    padding: 4px 10px;
+  }
+
+  .header__user-container {
+    margin-top: 8px;
+  }
+}
