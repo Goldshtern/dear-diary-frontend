@@ -7,7 +7,11 @@ function Profile() {
         <p className="profile__diaries-text">
           You want to write something in Me???
         </p>
-        <ul className="profile__diaries-list"></ul>
+        <ul className="profile__diaries-list">
+          <div>Page1</div>
+          <div>Page2</div>
+          <div>Page3</div>
+        </ul>
       </section>
     </div>
   );

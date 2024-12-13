@@ -1,0 +1,85 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f7f7f7;
+}
+
+.profile__diaries {
+  width: 100%;
+  max-width: 800px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile__diaries-text {
+  font-size: 20px;
+  color: #333;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile__diaries-list {
+  width: 100%;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.profile__diaries-list li {
+  background-color: #fafafa;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+  padding: 15px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.profile__diaries-list li:hover {
+  background-color: #eaeaea;
+  cursor: pointer;
+  transform: translateY(-4px);
+}
+
+@media (min-width: 768px) {
+  .profile__diaries {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .profile__diaries-text {
+    font-size: 22px;
+  }
+
+  .profile__diaries-list li {
+    padding: 20px;
+  }
+}
+
+.profile__diaries-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.profile__diaries-list li {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.profile__diaries-list li:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
