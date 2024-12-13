@@ -4,7 +4,7 @@ function Main({ advice, onRefresh }) {
     <main className="main">
       <div className={`main__advice ${!advice ? "main__advice--loading" : ""}`}>
         <p className="main__advice-text">
-          {advice ? `Advice: ${advice}` : "Loading advice..."}
+          {advice ? `Guru Advices: ${advice}` : "Loading advice..."}
         </p>
         <button
           className="main__advice-change-btn"

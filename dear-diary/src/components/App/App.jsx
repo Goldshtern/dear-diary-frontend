@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
+import Profile from "../Profile/Profile";
 import { getAdvice } from "../../utils/adviceApi";
 
 function App() {
@@ -24,7 +26,13 @@ function App() {
     <div className="page">
       <div className="page__content">
         <Header />
-        <Main advice={advice} onRefresh={fetchAdvice} />
+        <Routes>
+          <Route
+            path="/"
+            element={<Main advice={advice} onRefresh={fetchAdvice} />}
+          />
+          <Route path="/profile" element={<Profile />} />
+        </Routes>
         <Footer />
       </div>
     </div>
