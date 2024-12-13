@@ -17,7 +17,7 @@ function App() {
   };
 
   useEffect(() => {
-    fetchAdvice(); // Initial fetch on load
+    fetchAdvice();
   }, []);
 
   return (
