@@ -1,3 +1,5 @@
+//import React from "react";
+import "./Main.css";
 function Main({ advice, onRefresh }) {
   return (
     <main className="main">
