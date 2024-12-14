@@ -130,7 +130,6 @@
   }
 }
 
-/* Smartphone (480px and below) */
 @media (max-width: 480px) {
   .modal__content {
     max-width: 90%;
