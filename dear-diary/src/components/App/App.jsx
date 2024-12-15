@@ -38,6 +38,27 @@ function App() {
     setActiveModal("");
   };
 
+  useEffect(() => {
+    if (!activeModal) return;
+
+    const handleEscClose = (e) => {
+      if (e.key === "Escape") {
+        closeActiveModal();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscClose);
+    return () => {
+      document.removeEventListener("keydown", handleEscClose);
+    };
+  }, [activeModal]);
+
+  const handleOverlayClick = (e) => {
+    if (e.target.classList.contains("modal")) {
+      closeActiveModal();
+    }
+  };
+
   return (
     <>
       <div className="page">
@@ -56,12 +77,16 @@ function App() {
           </Routes>
           <Footer />
         </div>
-        <ModalWithForm
-          title="New Diary Page"
-          buttonText="Add Page"
-          activeModal={activeModal}
-          handleCloseClick={closeActiveModal}
-        />
+        {activeModal && (
+          <div className="modal" onClick={handleOverlayClick}>
+            <ModalWithForm
+              title="New Diary Page"
+              buttonText="Add Page"
+              activeModal={activeModal}
+              handleCloseClick={closeActiveModal}
+            />
+          </div>
+        )}
       </div>
     </>
   );
