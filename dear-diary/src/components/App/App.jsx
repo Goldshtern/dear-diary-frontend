@@ -34,6 +34,10 @@ function App() {
     setActiveModal("+ Add diary page");
   };
 
+  const closeActiveModal = () => {
+    setActiveModal("");
+  };
+
   return (
     <>
       <div className="page">
@@ -56,6 +60,7 @@ function App() {
           title="New Diary Page"
           buttonText="Add Page"
           activeModal={activeModal}
+          handleCloseClick={closeActiveModal}
         />
       </div>
     </>
