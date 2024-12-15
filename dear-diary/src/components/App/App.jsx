@@ -6,9 +6,11 @@ import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import Profile from "../Profile/Profile";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import RegisterModal from "../RegisterModal/RegisterModal";
 import { getAdvice } from "../../utils/adviceApi";
 
 function App() {
+  const [isAboutOpen, setAboutOpen] = useState(false);
   const [advice, setAdvice] = useState("");
   const [activeModal, setActiveModal] = useState("");
 
@@ -24,15 +26,23 @@ function App() {
     fetchAdvice();
   }, []);
 
-  const closeActiveModal = () => {
-    setActiveModal("");
+  const handleAboutToggle = () => {
+    setAboutOpen(!isAboutOpen);
+  };
+
+  const handleAddClick = () => {
+    setActiveModal("+ Add diary page");
   };
 
   return (
     <>
       <div className="page">
         <div className="page__content">
-          <Header />
+          <Header
+            isAboutOpen={isAboutOpen}
+            handleAboutToggle={handleAboutToggle}
+            handleAddClick={handleAddClick}
+          />
           <Routes>
             <Route
               path="/"
@@ -42,11 +52,12 @@ function App() {
           </Routes>
           <Footer />
         </div>
+        <ModalWithForm
+          title="New Diary Page"
+          buttonText="Add Page"
+          activeModal={activeModal}
+        />
       </div>
-      <ModalWithForm
-        activeModal={activeModal}
-        closeActiveModal={closeActiveModal}
-      />
     </>
   );
 }

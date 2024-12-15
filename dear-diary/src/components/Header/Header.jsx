@@ -4,12 +4,7 @@ import logo from "../../assets/logo-diary.png";
 import avatar from "../../assets/avatar.png";
 import About from "../About/About";
 
-function Header() {
-  const [isAboutOpen, setAboutOpen] = React.useState(false);
-
-  const handleAboutToggle = () => {
-    setAboutOpen(!isAboutOpen);
-  };
+function Header({ isAboutOpen, handleAboutToggle, handleAddClick }) {
   return (
     <header className="header">
       <div className="header__logo-and-title">
@@ -32,7 +27,11 @@ function Header() {
           </button>
           <About isOpen={isAboutOpen} onClose={handleAboutToggle} />
         </div>
-        <button type="button" className="header__add-diary-page-btn">
+        <button
+          onClick={handleAddClick}
+          type="button"
+          className="header__add-diary-page-btn"
+        >
           + Add diary page
         </button>
         <div className="header__user-container">
