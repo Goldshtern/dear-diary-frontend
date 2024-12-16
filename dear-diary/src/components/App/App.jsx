@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import Profile from "../Profile/Profile";
-import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import AddDiaryModal from "../AddDiaryModal/AddDiaryModal";
 import { getAdvice } from "../../utils/adviceApi";
 
 function App() {
   const [isAboutOpen, setAboutOpen] = useState(false);
   const [advice, setAdvice] = useState("");
   const [activeModal, setActiveModal] = useState("");
+  const [name, setName] = useState("");
+  const [diaryText, setDiaryText] = useState("");
 
   const fetchAdvice = () => {
     getAdvice()
@@ -24,6 +26,15 @@ function App() {
   useEffect(() => {
     fetchAdvice();
   }, []);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "name") {
+      setName(value);
+    } else if (name === "diaryText") {
+      setDiaryText(value);
+    }
+  };
 
   const handleAboutToggle = () => {
     setAboutOpen(!isAboutOpen);
@@ -78,11 +89,12 @@ function App() {
         </div>
         {activeModal && (
           <div className="modal" onClick={handleOverlayClick}>
-            <ModalWithForm
-              title="New Diary Page"
-              buttonText="Add Page"
+            <AddDiaryModal
               activeModal={activeModal}
               handleCloseClick={closeActiveModal}
+              name={name}
+              diaryText={diaryText}
+              handleInputChange={handleInputChange}
             />
           </div>
         )}
