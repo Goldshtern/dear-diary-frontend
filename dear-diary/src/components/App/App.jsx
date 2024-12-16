@@ -6,7 +6,6 @@ import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import Profile from "../Profile/Profile";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import RegisterModal from "../RegisterModal/RegisterModal";
 import { getAdvice } from "../../utils/adviceApi";
 
 function App() {
