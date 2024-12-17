@@ -7,6 +7,7 @@ import Footer from "../Footer/Footer";
 import Profile from "../Profile/Profile";
 import AddDiaryModal from "../AddDiaryModal/AddDiaryModal";
 import { getAdvice } from "../../utils/adviceApi";
+import { defaultDiaryPages } from "../../utils/constants"; // Import defaultDiaryPages
 
 function App() {
   const [isAboutOpen, setAboutOpen] = useState(false);
@@ -14,6 +15,7 @@ function App() {
   const [activeModal, setActiveModal] = useState("");
   const [name, setName] = useState("");
   const [diaryText, setDiaryText] = useState("");
+  const [diaryEntries, setDiaryEntries] = useState(defaultDiaryPages); // Set initial state
 
   const fetchAdvice = () => {
     getAdvice()
@@ -69,6 +71,18 @@ function App() {
     }
   };
 
+  const handleAddDiary = () => {
+    const newDiaryEntry = {
+      _id: Date.now(),
+      name,
+      text: diaryText,
+    };
+    setDiaryEntries([...diaryEntries, newDiaryEntry]);
+    setName("");
+    setDiaryText("");
+    closeActiveModal();
+  };
+
   return (
     <>
       <div className="page">
@@ -83,7 +97,10 @@ function App() {
               path="/"
               element={<Main advice={advice} onRefresh={fetchAdvice} />}
             />
-            <Route path="/profile" element={<Profile />} />
+            <Route
+              path="/profile"
+              element={<Profile diaryEntries={diaryEntries} />}
+            />
           </Routes>
           <Footer />
         </div>
@@ -95,6 +112,7 @@ function App() {
               name={name}
               diaryText={diaryText}
               handleInputChange={handleInputChange}
+              handleAddDiary={handleAddDiary}
             />
           </div>
         )}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import "./AddDiaryModal.css";
 
@@ -8,10 +8,11 @@ function DiaryModal({
   name,
   diaryText,
   handleInputChange,
+  handleAddDiary,
 }) {
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleCloseClick();
+    handleAddDiary();
   };
 
   return (

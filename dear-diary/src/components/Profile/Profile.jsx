@@ -1,16 +1,20 @@
+// Profile.jsx
+
+import React from "react";
+import DiaryPage from "../DiaryPage/DiaryPage";
 import "./Profile.css";
 
-function Profile() {
+function Profile({ diaryEntries }) {
   return (
     <div className="profile">
       <section className="profile__diaries">
         <p className="profile__diaries-text">
-          You want to write something in Me???
+          You want to write something to Me???
         </p>
         <ul className="profile__diaries-list">
-          <div>Page1</div>
-          <div>Page2</div>
-          <div>Page3</div>
+          {diaryEntries.map((item) => (
+            <DiaryPage key={item._id} item={item} />
+          ))}
         </ul>
       </section>
     </div>

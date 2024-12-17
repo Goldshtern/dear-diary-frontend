@@ -1,54 +1,53 @@
 .profile {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 20px;
+  padding: 2rem;
+  background-color: #f9f9f9;
   font-family: Arial, sans-serif;
-  background-color: #f7f7f7;
 }
 
 .profile__diaries {
-  width: 100%;
-  max-width: 800px;
-  background-color: #ffffff;
+  background: #fff;
+  padding: 2rem;
   border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .profile__diaries-text {
-  font-size: 20px;
-  color: #333;
+  font-size: 1.5rem;
   font-weight: bold;
+  color: #333;
+  margin-bottom: 1.5rem;
   text-align: center;
-  margin-bottom: 20px;
 }
 
 .profile__diaries-list {
-  width: 100%;
-  list-style-type: none;
+  list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-.profile__diaries-list li {
-  background-color: #fafafa;
+/* Styling for DiaryPage component */
+.diary-page {
+  padding: 1.5rem;
+  background: #f4f4f4;
   border: 1px solid #ddd;
-  margin-bottom: 12px;
-  padding: 15px;
-  border-radius: 6px;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  border-radius: 8px;
 }
 
-.profile__diaries-list li:hover {
-  background-color: #eaeaea;
-  cursor: pointer;
-  transform: translateY(-4px);
+.diary-page__name {
+  font-size: 1.8rem;
+  color: #222;
+  margin-bottom: 0.5rem;
+}
+
+.diary-page__text {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
 }
 
 @media (min-width: 768px) {
