@@ -3,12 +3,15 @@ import "./Header.css";
 import logo from "../../assets/logo-diary.png";
 import avatar from "../../assets/avatar.png";
 import About from "../About/About";
+import { Link } from "react-router-dom";
 
 function Header({ isAboutOpen, handleAboutToggle, handleAddClick }) {
   return (
     <header className="header">
       <div className="header__logo-and-title">
-        <img className="header__logo" src={logo} alt="Diary Logo" />
+        <Link to="/">
+          <img className="header__logo" src={logo} alt="Diary Logo" />
+        </Link>
         <div className="header__title-container">
           <h1 className="header__title">My Dear, Diary!</h1>
           <p className="header__date">
@@ -34,10 +37,12 @@ function Header({ isAboutOpen, handleAboutToggle, handleAddClick }) {
         >
           + Add diary page
         </button>
-        <div className="header__user-container">
-          <p className="header__username">Aleksandr Goldshtern</p>
-          <img className="header__avatar" src={avatar} alt="User Avatar" />
-        </div>
+        <Link to="/profile">
+          <div className="header__user-container">
+            <p className="header__username">Aleksandr Goldshtern</p>
+            <img className="header__avatar" src={avatar} alt="User Avatar" />
+          </div>
+        </Link>
       </div>
     </header>
   );

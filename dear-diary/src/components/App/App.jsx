@@ -7,7 +7,7 @@ import Footer from "../Footer/Footer";
 import Profile from "../Profile/Profile";
 import AddDiaryModal from "../AddDiaryModal/AddDiaryModal";
 import { getAdvice } from "../../utils/adviceApi";
-import { defaultDiaryPages } from "../../utils/constants"; // Import defaultDiaryPages
+import { defaultDiaryPages } from "../../utils/constants";
 
 function App() {
   const [isAboutOpen, setAboutOpen] = useState(false);
@@ -15,7 +15,7 @@ function App() {
   const [activeModal, setActiveModal] = useState("");
   const [name, setName] = useState("");
   const [diaryText, setDiaryText] = useState("");
-  const [diaryEntries, setDiaryEntries] = useState(defaultDiaryPages); // Set initial state
+  const [diaryEntries, setDiaryEntries] = useState(defaultDiaryPages);
 
   const fetchAdvice = () => {
     getAdvice()

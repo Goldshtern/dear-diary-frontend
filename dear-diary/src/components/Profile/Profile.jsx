@@ -1,5 +1,3 @@
-// Profile.jsx
-
 import React from "react";
 import DiaryPage from "../DiaryPage/DiaryPage";
 import "./Profile.css";

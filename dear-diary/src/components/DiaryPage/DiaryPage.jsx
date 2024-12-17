@@ -1,4 +1,5 @@
 import "./DiaryPage.css";
+
 function DiaryPage({ item }) {
   return (
     <li className="diary-page">
