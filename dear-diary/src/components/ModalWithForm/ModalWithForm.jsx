@@ -10,11 +10,7 @@ function ModalWithForm({
   onSubmit,
 }) {
   return (
-    <div
-      className={`modal ${
-        activeModal === "+ Add diary page" && "modal_opened"
-      }`}
-    >
+    <div className={`modal ${activeModal && "modal_opened"}`}>
       <div className="modal__content">
         <h2 className="modal__title">{title}</h2>
         <button

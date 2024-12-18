@@ -5,7 +5,12 @@ import avatar from "../../assets/avatar.png";
 import About from "../About/About";
 import { Link } from "react-router-dom";
 
-function Header({ isAboutOpen, handleAboutToggle, handleAddClick }) {
+function Header({
+  isAboutOpen,
+  handleAboutToggle,
+  handleAddClick,
+  handleRegisterClick,
+}) {
   return (
     <header className="header">
       <div className="header__logo-and-title">
@@ -36,6 +41,13 @@ function Header({ isAboutOpen, handleAboutToggle, handleAddClick }) {
           className="header__add-diary-page-btn"
         >
           + Add diary page
+        </button>
+        <button
+          onClick={handleRegisterClick}
+          type="button"
+          className="header__register-btn"
+        >
+          Register
         </button>
         <Link to="/profile">
           <div className="header__user-container">

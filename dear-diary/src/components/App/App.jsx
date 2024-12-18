@@ -6,6 +6,7 @@ import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import Profile from "../Profile/Profile";
 import AddDiaryModal from "../AddDiaryModal/AddDiaryModal";
+import RegisterModal from "../RegisterModal/RegisterModal";
 import { getAdvice } from "../../utils/adviceApi";
 import { defaultDiaryPages } from "../../utils/constants";
 
@@ -13,9 +14,15 @@ function App() {
   const [isAboutOpen, setAboutOpen] = useState(false);
   const [advice, setAdvice] = useState("");
   const [activeModal, setActiveModal] = useState("");
-  const [name, setName] = useState("");
-  const [diaryText, setDiaryText] = useState("");
+  const [currentUser, setCurrentUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+    avatarUrl: "",
+  });
   const [diaryEntries, setDiaryEntries] = useState(defaultDiaryPages);
+  const [diaryName, setDiaryName] = useState("");
+  const [diaryText, setDiaryText] = useState("");
 
   const fetchAdvice = () => {
     getAdvice()
@@ -31,19 +38,34 @@ function App() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    if (name === "name") {
-      setName(value);
+
+    if (
+      name === "email" ||
+      name === "password" ||
+      name === "name" ||
+      name === "avatarUrl"
+    ) {
+      setCurrentUser((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    } else if (name === "diaryName") {
+      setDiaryName(value);
     } else if (name === "diaryText") {
-      setDiaryText(value);
+      setDiaryText(value); //
     }
   };
 
   const handleAboutToggle = () => {
-    setAboutOpen(!isAboutOpen);
+    setAboutOpen((prevState) => !prevState);
   };
 
   const handleAddClick = () => {
-    setActiveModal("+ Add diary page");
+    setActiveModal("addDiary");
+  };
+
+  const handleRegisterClick = () => {
+    setActiveModal("register");
   };
 
   const closeActiveModal = () => {
@@ -74,50 +96,60 @@ function App() {
   const handleAddDiary = () => {
     const newDiaryEntry = {
       _id: Date.now(),
-      name,
+      name: diaryName,
       text: diaryText,
     };
-    setDiaryEntries([...diaryEntries, newDiaryEntry]);
-    setName("");
+    setDiaryEntries((prevEntries) => [...prevEntries, newDiaryEntry]);
+    setDiaryName("");
     setDiaryText("");
     closeActiveModal();
   };
 
   return (
-    <>
-      <div className="page">
-        <div className="page__content">
-          <Header
-            isAboutOpen={isAboutOpen}
-            handleAboutToggle={handleAboutToggle}
-            handleAddClick={handleAddClick}
+    <div className="page">
+      <div className="page__content">
+        <Header
+          isAboutOpen={isAboutOpen}
+          handleAboutToggle={handleAboutToggle}
+          handleAddClick={handleAddClick}
+          handleRegisterClick={handleRegisterClick}
+        />
+        <Routes>
+          <Route
+            path="/"
+            element={<Main advice={advice} onRefresh={() => fetchAdvice()} />}
           />
-          <Routes>
-            <Route
-              path="/"
-              element={<Main advice={advice} onRefresh={fetchAdvice} />}
-            />
-            <Route
-              path="/profile"
-              element={<Profile diaryEntries={diaryEntries} />}
-            />
-          </Routes>
-          <Footer />
-        </div>
-        {activeModal && (
-          <div className="modal" onClick={handleOverlayClick}>
+          <Route
+            path="/profile"
+            element={<Profile diaryEntries={diaryEntries} />}
+          />
+        </Routes>
+        <Footer />
+      </div>
+
+      {activeModal && (
+        <div className="modal" onClick={handleOverlayClick}>
+          {activeModal === "addDiary" && (
             <AddDiaryModal
               activeModal={activeModal}
               handleCloseClick={closeActiveModal}
-              name={name}
+              diaryName={diaryName}
               diaryText={diaryText}
               handleInputChange={handleInputChange}
               handleAddDiary={handleAddDiary}
             />
-          </div>
-        )}
-      </div>
-    </>
+          )}
+          {activeModal === "register" && (
+            <RegisterModal
+              activeModal={activeModal}
+              handleCloseClick={closeActiveModal}
+              formData={currentUser}
+              handleInputChange={handleInputChange}
+            />
+          )}
+        </div>
+      )}
+    </div>
   );
 }
 
