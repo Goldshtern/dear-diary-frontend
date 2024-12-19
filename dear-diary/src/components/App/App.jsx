@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, data } from "react-router-dom";
 import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -9,7 +9,7 @@ import AddDiaryModal from "../AddDiaryModal/AddDiaryModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../Login/LoginModal";
 import { getAdvice } from "../../utils/adviceApi";
-import { defaultDiaryPages } from "../../utils/constants";
+import { getPages } from "../../utils/api";
 
 function App() {
   const [isAboutOpen, setAboutOpen] = useState(false);
@@ -21,7 +21,7 @@ function App() {
     password: "",
     avatarUrl: "",
   });
-  const [diaryEntries, setDiaryEntries] = useState(defaultDiaryPages);
+  const [diaryEntries, setDiaryEntries] = useState([]);
   const [diaryName, setDiaryName] = useState("");
   const [diaryText, setDiaryText] = useState("");
 
@@ -34,7 +34,13 @@ function App() {
   };
 
   useEffect(() => {
-    fetchAdvice();
+    getAdvice()
+      .then((data) => setAdvice(data.slip.advice))
+      .catch((err) => console.error("Error fetching advice data:", err));
+
+    getPages()
+      .then((data) => setDiaryEntries(data))
+      .catch((err) => console.error("Error fetching diary pages:", err));
   }, []);
 
   const handleInputChange = (e) => {
@@ -53,7 +59,7 @@ function App() {
     } else if (name === "diaryName") {
       setDiaryName(value);
     } else if (name === "diaryText") {
-      setDiaryText(value); //
+      setDiaryText(value);
     }
   };
 

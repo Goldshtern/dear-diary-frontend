@@ -10,8 +10,8 @@ function Profile({ diaryEntries }) {
           You want to write something to Me???
         </p>
         <ul className="profile__diaries-list">
-          {diaryEntries.map((item) => (
-            <DiaryPage key={item._id} item={item} />
+          {diaryEntries.map((entry) => (
+            <DiaryPage key={entry._id} item={entry} />
           ))}
         </ul>
       </section>
