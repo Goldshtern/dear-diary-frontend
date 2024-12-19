@@ -72,6 +72,24 @@
   padding: 8px 16px;
 }
 
+.header__register-btn {
+  font-family: "DM Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0044cc;
+  border: 2px solid #0044cc;
+  border-radius: 4px;
+  background: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.header__register-btn:hover {
+  background-color: #0044cc;
+  color: white;
+}
+
 .header__user-container {
   display: flex;
   align-items: center;
@@ -121,6 +139,11 @@
     padding: 6px 12px;
   }
 
+  .header__register-btn {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+
   .header__user-container {
     margin-top: 12px;
   }
@@ -156,6 +179,11 @@
   }
 
   .header__add-diary-page-btn {
+    font-size: 12px;
+    padding: 4px 10px;
+  }
+
+  .header__register-btn {
     font-size: 12px;
     padding: 4px 10px;
   }
