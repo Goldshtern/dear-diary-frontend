@@ -10,6 +10,7 @@ function Header({
   handleAboutToggle,
   handleAddClick,
   handleRegisterClick,
+  handleLoginClick,
 }) {
   return (
     <header className="header">
@@ -48,6 +49,13 @@ function Header({
           className="header__register-btn"
         >
           Register
+        </button>
+        <button
+          onClick={handleLoginClick}
+          type="button"
+          className="header__register-btn"
+        >
+          Login
         </button>
         <Link to="/profile">
           <div className="header__user-container">

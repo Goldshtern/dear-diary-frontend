@@ -7,6 +7,7 @@ import Footer from "../Footer/Footer";
 import Profile from "../Profile/Profile";
 import AddDiaryModal from "../AddDiaryModal/AddDiaryModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
+import LoginModal from "../Login/LoginModal";
 import { getAdvice } from "../../utils/adviceApi";
 import { defaultDiaryPages } from "../../utils/constants";
 
@@ -68,6 +69,10 @@ function App() {
     setActiveModal("register");
   };
 
+  const handleLoginClick = () => {
+    setActiveModal("login");
+  };
+
   const closeActiveModal = () => {
     setActiveModal("");
   };
@@ -113,6 +118,7 @@ function App() {
           handleAboutToggle={handleAboutToggle}
           handleAddClick={handleAddClick}
           handleRegisterClick={handleRegisterClick}
+          handleLoginClick={handleLoginClick}
         />
         <Routes>
           <Route
@@ -141,6 +147,14 @@ function App() {
           )}
           {activeModal === "register" && (
             <RegisterModal
+              activeModal={activeModal}
+              handleCloseClick={closeActiveModal}
+              formData={currentUser}
+              handleInputChange={handleInputChange}
+            />
+          )}
+          {activeModal === "login" && (
+            <LoginModal
               activeModal={activeModal}
               handleCloseClick={closeActiveModal}
               formData={currentUser}
