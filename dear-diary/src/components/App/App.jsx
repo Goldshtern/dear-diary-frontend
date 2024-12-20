@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, data } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -9,7 +9,7 @@ import AddDiaryModal from "../AddDiaryModal/AddDiaryModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../Login/LoginModal";
 import { getAdvice } from "../../utils/adviceApi";
-import { getPages } from "../../utils/api";
+import { getPages, postPages } from "../../utils/api";
 
 function App() {
   const [isAboutOpen, setAboutOpen] = useState(false);
@@ -22,8 +22,9 @@ function App() {
     avatarUrl: "",
   });
   const [diaryEntries, setDiaryEntries] = useState([]);
-  const [diaryName, setDiaryName] = useState("");
+  const [diaryTitle, setDiaryTitle] = useState("");
   const [diaryText, setDiaryText] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchAdvice = () => {
     getAdvice()
@@ -56,8 +57,8 @@ function App() {
         ...prevData,
         [name]: value,
       }));
-    } else if (name === "diaryName") {
-      setDiaryName(value);
+    } else if (name === "diaryTitle") {
+      setDiaryTitle(value);
     } else if (name === "diaryText") {
       setDiaryText(value);
     }
@@ -105,15 +106,23 @@ function App() {
   };
 
   const handleAddDiary = () => {
+    setIsLoading(true);
+
     const newDiaryEntry = {
       _id: Date.now(),
-      name: diaryName,
+      title: diaryTitle,
       text: diaryText,
     };
-    setDiaryEntries((prevEntries) => [...prevEntries, newDiaryEntry]);
-    setDiaryName("");
-    setDiaryText("");
-    closeActiveModal();
+
+    return postPages(newDiaryEntry.title, newDiaryEntry.text)
+      .then(() => {
+        setDiaryEntries((prevEntries) => [...prevEntries, newDiaryEntry]);
+        setDiaryTitle("");
+        setDiaryText("");
+        closeActiveModal();
+      })
+      .catch((err) => console.error("Error adding new item:", err))
+      .finally(() => setIsLoading(false));
   };
 
   return (
@@ -145,10 +154,11 @@ function App() {
             <AddDiaryModal
               activeModal={activeModal}
               handleCloseClick={closeActiveModal}
-              diaryName={diaryName}
+              diaryTitle={diaryTitle}
               diaryText={diaryText}
               handleInputChange={handleInputChange}
               handleAddDiary={handleAddDiary}
+              isLoading={isLoading}
             />
           )}
           {activeModal === "register" && (

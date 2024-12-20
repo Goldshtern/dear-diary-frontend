@@ -5,7 +5,7 @@ import "./AddDiaryModal.css";
 function DiaryModal({
   activeModal,
   handleCloseClick,
-  name,
+  diaryTitle,
   diaryText,
   handleInputChange,
   handleAddDiary,
@@ -28,10 +28,10 @@ function DiaryModal({
         <input
           className="modal__input"
           type="text"
-          name="name"
-          value={name}
+          name="diaryTitle"
+          value={diaryTitle}
           onChange={handleInputChange}
-          id="name"
+          id="diaryTitle"
           placeholder="Dear, Diary"
         />
       </label>

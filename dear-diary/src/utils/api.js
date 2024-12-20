@@ -14,3 +14,18 @@ function getPages() {
 }
 
 export { getPages };
+
+function postPages(title, text) {
+  return fetch(`${BASE_URL}/pages`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      title,
+      text,
+    }),
+  }).then(checkResponse);
+}
+
+export { postPages };

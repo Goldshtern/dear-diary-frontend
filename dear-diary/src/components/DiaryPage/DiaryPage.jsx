@@ -4,7 +4,7 @@ function DiaryPage({ item }) {
   return (
     <li className="diary-page">
       <div>
-        <h2 className="diary-page__name">{item.name}</h2>
+        <h2 className="diary-page__name">{item.title}</h2>
         <p className="diary-page__text">{item.text}</p>
       </div>
     </li>
