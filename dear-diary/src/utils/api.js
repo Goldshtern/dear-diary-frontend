@@ -10,7 +10,7 @@ function checkResponse(res) {
 export { checkResponse };
 
 function getPages() {
-  return fetch(`${BASE_URL}/items`).then(checkResponse);
+  return fetch(`${BASE_URL}/pages`).then(checkResponse);
 }
 
 export { getPages };
