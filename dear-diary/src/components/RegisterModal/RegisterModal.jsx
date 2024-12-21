@@ -1,17 +1,14 @@
 import React from "react";
 import "./RegisterModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import { useState } from "react";
 
 const RegisterModal = ({
   activeModal,
   handleCloseClick,
-  formData,
+  formData = { email: "", password: "", name: "", avatarUrl: "" }, // Default values
   handleInputChange,
-  //handleRegistration,
+  handleRegistration,
 }) => {
-  //const [isLoading, setIsLoading] = useState(false);
-
   const isFormValid = () => {
     return (
       formData.email && formData.password && formData.name && formData.avatarUrl
@@ -20,22 +17,21 @@ const RegisterModal = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (isFormValid()) {
-      console.log("Form submitted:", formData);
-    } else {
-      console.log("Form is invalid!");
-    }
-    handleCloseClick();
-  };
 
-  //const handleSubmit = (e) => {
-  //e.preventDefault();
-  //setIsLoading(true);
-  //handleRegistration(formData);
-  //setIsLoading(false);
-  //console.log(formData);
-  //handleCloseClick();
-  //};
+    if (isFormValid()) {
+      handleRegistration(formData)
+        .then(() => {
+          handleCloseClick(); // Close the modal after successful registration
+        })
+        .catch((err) => {
+          console.error("Registration failed:", err);
+          // Optionally, show an error message to the user
+        });
+    } else {
+      console.error("Form is invalid! Please fill in all fields.");
+      // Optionally, show an error message to the user
+    }
+  };
 
   return (
     <ModalWithForm

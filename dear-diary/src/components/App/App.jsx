@@ -16,17 +16,18 @@ function App() {
   const [isAboutOpen, setAboutOpen] = useState(false);
   const [advice, setAdvice] = useState("");
   const [activeModal, setActiveModal] = useState("");
-  const [currentUser, setCurrentUser] = useState({
-    name: "",
-    email: "",
-    password: "",
-    avatarUrl: "",
-  });
+  const [currentUser, setCurrentUser] = useState(null); // Store user data when logged in
   const [diaryEntries, setDiaryEntries] = useState([]);
   const [diaryTitle, setDiaryTitle] = useState("");
   const [diaryText, setDiaryText] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    name: "",
+    avatarUrl: "",
+  });
   const [isLoading, setIsLoading] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
 
   const navigate = useNavigate();
 
@@ -38,7 +39,6 @@ function App() {
 
   useEffect(() => {
     fetchAdvice();
-
     getPages()
       .then((data) => setDiaryEntries(data))
       .catch((err) => console.error("Error fetching diary pages:", err));
@@ -46,17 +46,10 @@ function App() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
-    if (name === "diaryTitle") {
-      setDiaryTitle(value);
-    } else if (name === "diaryText") {
-      setDiaryText(value);
-    } else {
-      setCurrentUser((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleAddDiary = () => {
@@ -114,13 +107,24 @@ function App() {
 
   const handleRegistration = ({ name, avatarUrl, email, password }) => {
     setIsLoading(true);
+    console.log("Attempting to register:", {
+      name,
+      avatarUrl,
+      email,
+      password,
+    });
     return signUp({ name, avatarUrl, email, password })
-      .then(() => handleLogin({ email, password }))
+      .then((response) => {
+        console.log("Registration successful:", response);
+        // On successful sign up, automatically log in the user
+        handleLogin({ email, password });
+      })
       .catch((err) => console.error("Error during registration:", err))
       .finally(() => setIsLoading(false));
   };
 
   const handleLogin = ({ email, password }) => {
+    console.log("Attempting to log in with:", { email, password });
     if (!email || !password) {
       return;
     }
@@ -128,8 +132,10 @@ function App() {
     setIsLoading(true);
     return signIn({ email, password })
       .then((userData) => {
-        setCurrentUser(userData);
-        setIsLoggedIn(true);
+        console.log("Login successful:", userData);
+        // On successful login, update user state
+        setCurrentUser(userData.user);
+        setIsLoggedIn(true); // Set login state
         closeActiveModal();
         navigate("/profile");
       })
@@ -178,7 +184,7 @@ function App() {
             <RegisterModal
               activeModal={activeModal}
               handleCloseClick={closeActiveModal}
-              formData={currentUser}
+              formData={formData} // Use formData here
               handleInputChange={handleInputChange}
               handleRegistration={handleRegistration}
             />

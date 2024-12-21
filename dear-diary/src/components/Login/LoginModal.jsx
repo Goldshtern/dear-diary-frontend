@@ -1,12 +1,13 @@
 import React from "react";
 import "./LoginModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
+
 const LoginModal = ({
   activeModal,
   handleCloseClick,
   formData,
   handleInputChange,
-  //handleLogin,
+  handleLogin, // Ensure this function is passed down from the parent (App.jsx)
 }) => {
   const isFormValid = () => {
     return formData.email && formData.password;
@@ -15,11 +16,18 @@ const LoginModal = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isFormValid()) {
-      console.log("Form submitted:", formData);
+      // Call the handleLogin function to trigger login logic
+      handleLogin(formData)
+        .then(() => {
+          handleCloseClick(); // Close the modal after successful login
+        })
+        .catch((err) => {
+          console.error("Login failed:", err);
+          // Optionally, show an error message to the user
+        });
     } else {
       console.log("Form is invalid!");
     }
-    handleCloseClick();
   };
 
   return (
