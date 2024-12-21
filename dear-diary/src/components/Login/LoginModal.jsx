@@ -6,6 +6,7 @@ const LoginModal = ({
   handleCloseClick,
   formData,
   handleInputChange,
+  //handleLogin,
 }) => {
   const isFormValid = () => {
     return formData.email && formData.password;
@@ -18,6 +19,7 @@ const LoginModal = ({
     } else {
       console.log("Form is invalid!");
     }
+    handleCloseClick();
   };
 
   return (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -10,6 +10,7 @@ import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../Login/LoginModal";
 import { getAdvice } from "../../utils/adviceApi";
 import { getPages, postPages } from "../../utils/api";
+import { signUp, signIn } from "../../utils/auth";
 
 function App() {
   const [isAboutOpen, setAboutOpen] = useState(false);
@@ -25,19 +26,18 @@ function App() {
   const [diaryTitle, setDiaryTitle] = useState("");
   const [diaryText, setDiaryText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const navigate = useNavigate();
 
   const fetchAdvice = () => {
     getAdvice()
-      .then((data) => {
-        setAdvice(data.slip.advice);
-      })
-      .catch((err) => console.error("Error fetching advice data:", err));
+      .then((data) => setAdvice(data.slip.advice))
+      .catch((err) => console.error("Error fetching advice:", err));
   };
 
   useEffect(() => {
-    getAdvice()
-      .then((data) => setAdvice(data.slip.advice))
-      .catch((err) => console.error("Error fetching advice data:", err));
+    fetchAdvice();
 
     getPages()
       .then((data) => setDiaryEntries(data))
@@ -47,61 +47,15 @@ function App() {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-    if (
-      name === "email" ||
-      name === "password" ||
-      name === "name" ||
-      name === "avatarUrl"
-    ) {
+    if (name === "diaryTitle") {
+      setDiaryTitle(value);
+    } else if (name === "diaryText") {
+      setDiaryText(value);
+    } else {
       setCurrentUser((prevData) => ({
         ...prevData,
         [name]: value,
       }));
-    } else if (name === "diaryTitle") {
-      setDiaryTitle(value);
-    } else if (name === "diaryText") {
-      setDiaryText(value);
-    }
-  };
-
-  const handleAboutToggle = () => {
-    setAboutOpen((prevState) => !prevState);
-  };
-
-  const handleAddClick = () => {
-    setActiveModal("addDiary");
-  };
-
-  const handleRegisterClick = () => {
-    setActiveModal("register");
-  };
-
-  const handleLoginClick = () => {
-    setActiveModal("login");
-  };
-
-  const closeActiveModal = () => {
-    setActiveModal("");
-  };
-
-  useEffect(() => {
-    if (!activeModal) return;
-
-    const handleEscClose = (e) => {
-      if (e.key === "Escape") {
-        closeActiveModal();
-      }
-    };
-
-    document.addEventListener("keydown", handleEscClose);
-    return () => {
-      document.removeEventListener("keydown", handleEscClose);
-    };
-  }, [activeModal]);
-
-  const handleOverlayClick = (e) => {
-    if (e.target.classList.contains("modal")) {
-      closeActiveModal();
     }
   };
 
@@ -125,20 +79,79 @@ function App() {
       .finally(() => setIsLoading(false));
   };
 
+  const handleRegisterClick = () => {
+    setActiveModal("register");
+  };
+
+  const handleLoginClick = () => {
+    setActiveModal("login");
+  };
+
+  const closeActiveModal = () => {
+    setActiveModal("");
+  };
+
+  const handleOverlayClick = (e) => {
+    if (e.target.classList.contains("modal")) {
+      closeActiveModal();
+    }
+  };
+
+  useEffect(() => {
+    if (!activeModal) return;
+
+    const handleEscClose = (e) => {
+      if (e.key === "Escape") {
+        closeActiveModal();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscClose);
+    return () => {
+      document.removeEventListener("keydown", handleEscClose);
+    };
+  }, [activeModal]);
+
+  const handleRegistration = ({ name, avatarUrl, email, password }) => {
+    setIsLoading(true);
+    return signUp({ name, avatarUrl, email, password })
+      .then(() => handleLogin({ email, password }))
+      .catch((err) => console.error("Error during registration:", err))
+      .finally(() => setIsLoading(false));
+  };
+
+  const handleLogin = ({ email, password }) => {
+    if (!email || !password) {
+      return;
+    }
+
+    setIsLoading(true);
+    return signIn({ email, password })
+      .then((userData) => {
+        setCurrentUser(userData);
+        setIsLoggedIn(true);
+        closeActiveModal();
+        navigate("/profile");
+      })
+      .catch((err) => console.error("Login failed:", err))
+      .finally(() => setIsLoading(false));
+  };
+
   return (
     <div className="page">
       <div className="page__content">
         <Header
           isAboutOpen={isAboutOpen}
-          handleAboutToggle={handleAboutToggle}
-          handleAddClick={handleAddClick}
+          handleAboutToggle={() => setAboutOpen(!isAboutOpen)}
+          handleAddClick={() => setActiveModal("addDiary")}
           handleRegisterClick={handleRegisterClick}
           handleLoginClick={handleLoginClick}
+          isLoggedIn={isLoggedIn}
         />
         <Routes>
           <Route
             path="/"
-            element={<Main advice={advice} onRefresh={() => fetchAdvice()} />}
+            element={<Main advice={advice} onRefresh={fetchAdvice} />}
           />
           <Route
             path="/profile"
@@ -167,6 +180,7 @@ function App() {
               handleCloseClick={closeActiveModal}
               formData={currentUser}
               handleInputChange={handleInputChange}
+              handleRegistration={handleRegistration}
             />
           )}
           {activeModal === "login" && (
@@ -175,6 +189,7 @@ function App() {
               handleCloseClick={closeActiveModal}
               formData={currentUser}
               handleInputChange={handleInputChange}
+              handleLogin={handleLogin}
             />
           )}
         </div>
