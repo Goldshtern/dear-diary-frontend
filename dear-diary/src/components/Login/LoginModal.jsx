@@ -5,9 +5,9 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 const LoginModal = ({
   activeModal,
   handleCloseClick,
-  formData,
+  formData = { email: "", password: "" }, // Fallback default value for formData
   handleInputChange,
-  handleLogin, // Ensure this function is passed down from the parent (App.jsx)
+  handleLogin,
 }) => {
   const isFormValid = () => {
     return formData.email && formData.password;
@@ -15,19 +15,15 @@ const LoginModal = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (isFormValid()) {
-      // Call the handleLogin function to trigger login logic
-      handleLogin(formData)
-        .then(() => {
-          handleCloseClick(); // Close the modal after successful login
-        })
-        .catch((err) => {
-          console.error("Login failed:", err);
-          // Optionally, show an error message to the user
-        });
+      // Call the login function here
+      handleLogin(formData);
     } else {
-      console.log("Form is invalid!");
+      console.error("Form is invalid!");
     }
+
+    handleCloseClick();
   };
 
   return (

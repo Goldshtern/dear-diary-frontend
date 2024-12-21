@@ -193,7 +193,7 @@ function App() {
             <LoginModal
               activeModal={activeModal}
               handleCloseClick={closeActiveModal}
-              formData={currentUser}
+              formData={formData || { email: "", password: "" }} // Ensure formData is never null or undefined
               handleInputChange={handleInputChange}
               handleLogin={handleLogin}
             />
