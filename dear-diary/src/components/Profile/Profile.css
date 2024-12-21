@@ -82,3 +82,19 @@
   background-color: #f0f0f0;
   cursor: pointer;
 }
+
+.profile__show-more {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.profile__show-more:hover {
+  background-color: #0056b3;
+}
