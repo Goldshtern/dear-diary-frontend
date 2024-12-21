@@ -10,7 +10,7 @@ const RegisterModal = ({
   handleInputChange,
   //handleRegistration,
 }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  //const [isLoading, setIsLoading] = useState(false);
 
   const isFormValid = () => {
     return (

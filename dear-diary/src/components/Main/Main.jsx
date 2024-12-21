@@ -1,17 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Preloader from "../Preloader/Preloader";
 import "./Main.css";
+
 function Main({ advice, onRefresh }) {
+  const isLoading = !advice;
+
   return (
     <main className="main">
-      <div className={`main__advice ${!advice ? "main__advice--loading" : ""}`}>
-        {advice ? (
-          <p className="main__advice-text">Guru Advices: {advice}</p>
-        ) : (
+      <div
+        className={`main__advice ${isLoading ? "main__advice--loading" : ""}`}
+      >
+        {isLoading ? (
           <>
             <Preloader />
             <p className="main__advice-text">Loading advice...</p>
           </>
+        ) : (
+          <p className="main__advice-text">Guru Advices: {advice}</p>
         )}
         <button
           className="main__advice-change-btn"
@@ -19,9 +24,6 @@ function Main({ advice, onRefresh }) {
           onClick={onRefresh}
         >
           Refresh
-        </button>
-        <button className="main__advice-save-btn" type="submit">
-          Save
         </button>
       </div>
     </main>
