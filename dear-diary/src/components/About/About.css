@@ -53,12 +53,12 @@
 
 @media (max-width: 768px) {
   .about {
-    width: 200px; /* Slightly smaller on tablets */
+    width: 200px;
   }
 }
 
 @media (max-width: 320px) {
   .about {
-    width: 160px; /* Even smaller on mobile */
+    width: 160px;
   }
 }

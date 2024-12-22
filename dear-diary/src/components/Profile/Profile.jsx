@@ -7,7 +7,7 @@ function Profile({ diaryEntries, error }) {
   const [isLoading, setIsLoading] = useState(true);
   const [hasData, setHasData] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [visibleEntries, setVisibleEntries] = useState(3); // Show 3 entries initially
+  const [visibleEntries, setVisibleEntries] = useState(3);
 
   useEffect(() => {
     if (error) {
@@ -23,7 +23,7 @@ function Profile({ diaryEntries, error }) {
   }, [diaryEntries, error]);
 
   const handleShowMore = () => {
-    setVisibleEntries((prev) => prev + 3); // Load 3 more entries on click
+    setVisibleEntries((prev) => prev + 3);
   };
 
   const isShowMoreVisible =

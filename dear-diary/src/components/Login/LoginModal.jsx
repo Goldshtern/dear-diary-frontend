@@ -5,7 +5,7 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 const LoginModal = ({
   activeModal,
   handleCloseClick,
-  formData = { email: "", password: "" }, // Fallback default value for formData
+  formData = { email: "", password: "" },
   handleInputChange,
   handleLogin,
 }) => {
@@ -17,7 +17,6 @@ const LoginModal = ({
     e.preventDefault();
 
     if (isFormValid()) {
-      // Call the login function here
       handleLogin(formData);
     } else {
       console.error("Form is invalid!");

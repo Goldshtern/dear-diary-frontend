@@ -5,7 +5,7 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 const RegisterModal = ({
   activeModal,
   handleCloseClick,
-  formData = { email: "", password: "", name: "", avatarUrl: "" }, // Default values
+  formData = { email: "", password: "", name: "", avatarUrl: "" },
   handleInputChange,
   handleRegistration,
 }) => {
@@ -21,15 +21,13 @@ const RegisterModal = ({
     if (isFormValid()) {
       handleRegistration(formData)
         .then(() => {
-          handleCloseClick(); // Close the modal after successful registration
+          handleCloseClick();
         })
         .catch((err) => {
           console.error("Registration failed:", err);
-          // Optionally, show an error message to the user
         });
     } else {
       console.error("Form is invalid! Please fill in all fields.");
-      // Optionally, show an error message to the user
     }
   };
 

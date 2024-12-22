@@ -16,7 +16,7 @@ function App() {
   const [isAboutOpen, setAboutOpen] = useState(false);
   const [advice, setAdvice] = useState("");
   const [activeModal, setActiveModal] = useState("");
-  const [currentUser, setCurrentUser] = useState(null); // Store user data when logged in
+  const [currentUser, setCurrentUser] = useState(null);
   const [diaryEntries, setDiaryEntries] = useState([]);
   const [diaryTitle, setDiaryTitle] = useState("");
   const [diaryText, setDiaryText] = useState("");
@@ -27,7 +27,7 @@ function App() {
     avatarUrl: "",
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const navigate = useNavigate();
 
@@ -116,7 +116,6 @@ function App() {
     return signUp({ name, avatarUrl, email, password })
       .then((response) => {
         console.log("Registration successful:", response);
-        // On successful sign up, automatically log in the user
         handleLogin({ email, password });
       })
       .catch((err) => console.error("Error during registration:", err))
@@ -133,9 +132,8 @@ function App() {
     return signIn({ email, password })
       .then((userData) => {
         console.log("Login successful:", userData);
-        // On successful login, update user state
         setCurrentUser(userData.user);
-        setIsLoggedIn(true); // Set login state
+        setIsLoggedIn(true);
         closeActiveModal();
         navigate("/profile");
       })
@@ -184,7 +182,7 @@ function App() {
             <RegisterModal
               activeModal={activeModal}
               handleCloseClick={closeActiveModal}
-              formData={formData} // Use formData here
+              formData={formData}
               handleInputChange={handleInputChange}
               handleRegistration={handleRegistration}
             />
@@ -193,7 +191,7 @@ function App() {
             <LoginModal
               activeModal={activeModal}
               handleCloseClick={closeActiveModal}
-              formData={formData || { email: "", password: "" }} // Ensure formData is never null or undefined
+              formData={formData || { email: "", password: "" }}
               handleInputChange={handleInputChange}
               handleLogin={handleLogin}
             />
