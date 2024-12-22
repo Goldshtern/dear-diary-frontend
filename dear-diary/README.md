@@ -96,4 +96,8 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 ---
 
+## GitHub pages
+
+https://goldshtern.github.io/dear-diary-frontend/
+
 Thank you for exploring My Dear Diary App! Feel free to contribute, provide feedback, or share your thoughts. Happy journaling!
