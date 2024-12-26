@@ -4,6 +4,7 @@
   align-items: center;
   min-height: 75vh;
   background-color: #f4f4f4;
+  overflow: hidden;
 }
 
 .main__advice {
@@ -43,4 +44,26 @@
 
 .main__advice-change-btn:hover {
   background-color: #0056b3;
+}
+
+@media (min-width: 769px) and (max-width: 793px) {
+  .main {
+    overflow-x: hidden;
+  }
+
+  .main__advice {
+    padding: 15px;
+    max-width: 90%;
+    box-sizing: border-box;
+  }
+
+  .main__advice-text {
+    font-size: 1rem;
+    word-break: break-word;
+  }
+
+  .main__advice-change-btn {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
 }
