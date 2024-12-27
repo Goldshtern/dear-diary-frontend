@@ -1,4 +1,3 @@
-/* General Styles */
 .profile {
   padding: 2rem;
   background-color: #f9f9f9;
@@ -31,25 +30,6 @@
   gap: 1.5rem;
 }
 
-.diary-page {
-  padding: 1.5rem;
-  background: #f4f4f4;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-}
-
-.diary-page__name {
-  font-size: 1.8rem;
-  color: #222;
-  margin-bottom: 0.5rem;
-}
-
-.diary-page__text {
-  font-size: 1rem;
-  color: #555;
-  line-height: 1.6;
-}
-
 .profile__diaries-list li {
   background-color: #fff;
   border: 1px solid #ddd;
@@ -79,40 +59,28 @@
   background-color: #0056b3;
 }
 
-/* Fix Scrolling for 769px - 793px */
-@media (min-width: 769px) and (max-width: 793px) {
+@media (max-width: 768px) {
+  .profile__diaries {
+    max-width: 700px;
+    padding: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
   .profile {
-    overflow-x: hidden; /* Prevent horizontal scrolling */
+    padding: 1.5rem;
   }
 
   .profile__diaries {
-    padding: 1.5rem; /* Adjust padding */
-    max-width: 95%; /* Ensure content fits within the viewport */
-    box-sizing: border-box; /* Include padding and border in the width */
+    padding: 1.5rem;
   }
 
   .profile__diaries-text {
-    font-size: 1.4rem; /* Slightly smaller font size */
-    text-align: center;
-  }
-
-  .profile__diaries-list {
-    flex-direction: column; /* Ensure vertical stacking */
-    gap: 1rem; /* Adjust gap for better spacing */
-  }
-
-  .profile__diaries-list li {
-    padding: 1rem; /* Adjust padding to fit viewport */
-    font-size: 0.95rem; /* Slightly smaller text */
-  }
-
-  .diary-page {
-    padding: 1rem; /* Reduce padding */
-    font-size: 0.9rem; /* Adjust font size for content */
+    font-size: 1.2rem;
   }
 
   .profile__show-more {
-    font-size: 0.9rem; /* Reduce button font size */
-    padding: 0.6rem 1.2rem; /* Adjust button size */
+    font-size: 14px;
+    padding: 0.6rem 1.2rem;
   }
 }
