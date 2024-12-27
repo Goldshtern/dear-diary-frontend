@@ -30,36 +30,39 @@ function Profile({ diaryEntries, error }) {
     diaryEntries && diaryEntries.length > visibleEntries;
 
   return (
-    <div className="profile">
-      <section className="profile__diaries">
-        <p className="profile__diaries-text">
-          You want to write something to Me???
-        </p>
-        {isLoading ? (
-          <Preloader />
-        ) : hasError ? (
-          <p className="profile__diaries-error">
-            Sorry, something went wrong during the request. There may be a
-            connection issue or the server may be down. Please try again later.
+    <>
+      <section className="profile">
+        <section className="profile__diaries">
+          <p className="profile__diaries-text">
+            You want to write something to Me???
           </p>
-        ) : hasData ? (
-          <>
-            <ul className="profile__diaries-list">
-              {diaryEntries.slice(0, visibleEntries).map((entry) => (
-                <DiaryPage key={entry._id} item={entry} />
-              ))}
-            </ul>
-            {isShowMoreVisible && (
-              <button className="profile__show-more" onClick={handleShowMore}>
-                Show More
-              </button>
-            )}
-          </>
-        ) : (
-          <p className="profile__diaries-empty">Nothing found</p>
-        )}
+          {isLoading ? (
+            <Preloader />
+          ) : hasError ? (
+            <p className="profile__diaries-error">
+              Sorry, something went wrong during the request. There may be a
+              connection issue or the server may be down. Please try again
+              later.
+            </p>
+          ) : hasData ? (
+            <>
+              <ul className="profile__diaries-list">
+                {diaryEntries.slice(0, visibleEntries).map((entry) => (
+                  <DiaryPage key={entry._id} item={entry} />
+                ))}
+              </ul>
+              {isShowMoreVisible && (
+                <button className="profile__show-more" onClick={handleShowMore}>
+                  Show More
+                </button>
+              )}
+            </>
+          ) : (
+            <p className="profile__diaries-empty">Nothing found</p>
+          )}
+        </section>
       </section>
-    </div>
+    </>
   );
 }
 
