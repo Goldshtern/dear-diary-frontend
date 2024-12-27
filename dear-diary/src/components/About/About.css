@@ -1,0 +1,64 @@
+.about {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  transform: translateY(-20px);
+  width: 250px;
+  background-color: #f5f5f5;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.about--open {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.about__content {
+  padding: 16px;
+}
+
+.about__title {
+  font-family: "Playfair Display", serif;
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #0044cc;
+}
+
+.about__text {
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  color: #333;
+}
+
+.about__close-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #555;
+}
+
+.about__close-btn:hover {
+  color: darkred;
+}
+
+@media (max-width: 768px) {
+  .about {
+    width: 200px;
+  }
+}
+
+@media (max-width: 320px) {
+  .about {
+    width: 160px;
+  }
+}
