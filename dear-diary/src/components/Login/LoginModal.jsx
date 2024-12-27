@@ -41,6 +41,8 @@ const LoginModal = ({
           name="email"
           value={formData.email}
           onChange={handleInputChange}
+          placeholder="email"
+          required
         />
       </label>
       <label className="modal__label-form">
@@ -51,6 +53,8 @@ const LoginModal = ({
           name="password"
           value={formData.password}
           onChange={handleInputChange}
+          placeholder="Password"
+          required
         />
       </label>
     </ModalWithForm>

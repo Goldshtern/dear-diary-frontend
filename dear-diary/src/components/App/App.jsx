@@ -46,10 +46,17 @@ function App() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+
+    if (name === "diaryTitle") {
+      setDiaryTitle(value);
+    } else if (name === "diaryText") {
+      setDiaryText(value);
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
 
   const handleAddDiary = () => {

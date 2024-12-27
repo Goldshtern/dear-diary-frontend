@@ -32,7 +32,8 @@ function DiaryModal({
           value={diaryTitle}
           onChange={handleInputChange}
           id="diaryTitle"
-          placeholder="Dear, Diary"
+          placeholder="'A Day to Remember'"
+          required
         />
       </label>
       <label className="modal__label-form">
@@ -43,7 +44,8 @@ function DiaryModal({
           name="diaryText"
           value={diaryText}
           id="diaryText"
-          placeholder="Diary Text"
+          placeholder="Write your diary text here..."
+          required
           onChange={handleInputChange}
         />
       </label>

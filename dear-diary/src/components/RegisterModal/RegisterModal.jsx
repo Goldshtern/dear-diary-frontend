@@ -45,6 +45,8 @@ const RegisterModal = ({
           type="email"
           className="modal__input"
           name="email"
+          placeholder="Enter email"
+          required
           value={formData.email}
           onChange={handleInputChange}
         />
@@ -55,6 +57,8 @@ const RegisterModal = ({
           type="password"
           className="modal__input"
           name="password"
+          placeholder="Enter password"
+          required
           value={formData.password}
           onChange={handleInputChange}
         />
@@ -65,6 +69,7 @@ const RegisterModal = ({
           type="text"
           className="modal__input"
           name="name"
+          placeholder="Enter your name"
           value={formData.name}
           onChange={handleInputChange}
         />
@@ -75,6 +80,8 @@ const RegisterModal = ({
           type="text"
           className="modal__input"
           name="avatarUrl"
+          placeholder="Enter URL"
+          required
           value={formData.avatarUrl}
           onChange={handleInputChange}
         />
