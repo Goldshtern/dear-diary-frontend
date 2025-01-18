@@ -20,6 +20,7 @@ function App() {
   const [diaryEntries, setDiaryEntries] = useState([]);
   const [diaryTitle, setDiaryTitle] = useState("");
   const [diaryText, setDiaryText] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -51,6 +52,8 @@ function App() {
       setDiaryTitle(value);
     } else if (name === "diaryText") {
       setDiaryText(value);
+    } else if (name === "imageUrl") {
+      setImageUrl(value);
     } else {
       setFormData((prevData) => ({
         ...prevData,
@@ -66,6 +69,7 @@ function App() {
       _id: Date.now(),
       title: diaryTitle,
       text: diaryText,
+      imageUrl: imageUrl,
     };
 
     return postPages(newDiaryEntry.title, newDiaryEntry.text)
@@ -73,6 +77,7 @@ function App() {
         setDiaryEntries((prevEntries) => [...prevEntries, newDiaryEntry]);
         setDiaryTitle("");
         setDiaryText("");
+        setImageUrl("");
         closeActiveModal();
       })
       .catch((err) => console.error("Error adding new item:", err))
@@ -180,6 +185,7 @@ function App() {
               handleCloseClick={closeActiveModal}
               diaryTitle={diaryTitle}
               diaryText={diaryText}
+              imageUrl={imageUrl}
               handleInputChange={handleInputChange}
               handleAddDiary={handleAddDiary}
               isLoading={isLoading}
