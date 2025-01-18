@@ -10,7 +10,7 @@ import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../Login/LoginModal";
 import { getAdvice } from "../../utils/adviceApi";
 import { getPages, postPages } from "../../utils/api";
-import { signUp, signIn } from "../../utils/auth";
+import { signUp, signIn } from "../../utils/MainApi";
 
 function App() {
   const [isAboutOpen, setAboutOpen] = useState(false);
