@@ -1,25 +1,20 @@
 import React from "react";
 import "./RegisterModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 
 const RegisterModal = ({
   activeModal,
   handleCloseClick,
-  formData = { email: "", password: "", name: "", avatarUrl: "" },
-  handleInputChange,
   handleRegistration,
 }) => {
-  const isFormValid = () => {
-    return (
-      formData.email && formData.password && formData.name && formData.avatarUrl
-    );
-  };
+  const { values, handleChange, errors, isValid } = useFormWithValidation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (isFormValid()) {
-      handleRegistration(formData)
+    if (isValid) {
+      handleRegistration(values)
         .then(() => {
           handleCloseClick();
         })
@@ -38,6 +33,7 @@ const RegisterModal = ({
       onSubmit={handleSubmit}
       activeModal={activeModal}
       handleCloseClick={handleCloseClick}
+      isButtonDisabled={!isValid}
     >
       <label className="modal__label-form">
         Email
@@ -47,9 +43,10 @@ const RegisterModal = ({
           name="email"
           placeholder="Enter email"
           required
-          value={formData.email}
-          onChange={handleInputChange}
+          value={values.email || ""}
+          onChange={handleChange}
         />
+        <span className="modal__error">{errors.email}</span>
       </label>
       <label className="modal__label-form">
         Password *
@@ -59,9 +56,10 @@ const RegisterModal = ({
           name="password"
           placeholder="Enter password"
           required
-          value={formData.password}
-          onChange={handleInputChange}
+          value={values.password || ""}
+          onChange={handleChange}
         />
+        <span className="modal__error">{errors.password}</span>
       </label>
       <label className="modal__label-form">
         Name
@@ -70,9 +68,11 @@ const RegisterModal = ({
           className="modal__input"
           name="name"
           placeholder="Enter your name"
-          value={formData.name}
-          onChange={handleInputChange}
+          required
+          value={values.name || ""}
+          onChange={handleChange}
         />
+        <span className="modal__error">{errors.name}</span>
       </label>
       <label className="modal__label-form">
         Avatar URL
@@ -82,9 +82,10 @@ const RegisterModal = ({
           name="avatarUrl"
           placeholder="Enter URL"
           required
-          value={formData.avatarUrl}
-          onChange={handleInputChange}
+          value={values.avatarUrl || ""}
+          onChange={handleChange}
         />
+        <span className="modal__error">{errors.avatarUrl}</span>
       </label>
     </ModalWithForm>
   );
