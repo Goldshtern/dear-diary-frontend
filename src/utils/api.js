@@ -15,7 +15,7 @@ function getPages() {
 
 export { getPages };
 
-function postPages(title, text) {
+function postPages(title, text, imageUrl) {
   return fetch(`${BASE_URL}/pages`, {
     method: "POST",
     headers: {
@@ -24,6 +24,7 @@ function postPages(title, text) {
     body: JSON.stringify({
       title,
       text,
+      imageUrl,
     }),
   }).then(checkResponse);
 }

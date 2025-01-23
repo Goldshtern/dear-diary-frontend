@@ -28,6 +28,7 @@ function App() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
 
   const navigate = useNavigate();
 
@@ -51,6 +52,8 @@ function App() {
       setDiaryTitle(value);
     } else if (name === "diaryText") {
       setDiaryText(value);
+    } else if (name === "imageUrl") {
+      setImageUrl(value);
     } else {
       setFormData((prevData) => ({
         ...prevData,
@@ -66,13 +69,19 @@ function App() {
       _id: Date.now(),
       title: diaryTitle,
       text: diaryText,
+      imageUrl: imageUrl,
     };
 
-    return postPages(newDiaryEntry.title, newDiaryEntry.text)
+    return postPages(
+      newDiaryEntry.title,
+      newDiaryEntry.text,
+      newDiaryEntry.imageUrl
+    )
       .then(() => {
         setDiaryEntries((prevEntries) => [...prevEntries, newDiaryEntry]);
         setDiaryTitle("");
         setDiaryText("");
+        setImageUrl("");
         closeActiveModal();
       })
       .catch((err) => console.error("Error adding new item:", err))
@@ -180,6 +189,7 @@ function App() {
               handleCloseClick={closeActiveModal}
               diaryTitle={diaryTitle}
               diaryText={diaryText}
+              imageUrl={imageUrl}
               handleInputChange={handleInputChange}
               handleAddDiary={handleAddDiary}
               isLoading={isLoading}

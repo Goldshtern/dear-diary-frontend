@@ -7,6 +7,7 @@ function DiaryModal({
   handleCloseClick,
   diaryTitle,
   diaryText,
+  imageUrl,
   handleInputChange,
   handleAddDiary,
 }) {
@@ -37,16 +38,29 @@ function DiaryModal({
         />
       </label>
       <label className="modal__label-form">
+        Image
+        <input
+          type="url"
+          className="modal__input"
+          name="imageUrl"
+          value={imageUrl}
+          id="imageUrl"
+          placeholder="Add your image URL here..."
+          required
+          onChange={handleInputChange}
+        />
+      </label>
+      <label className="modal__label-form">
         Text
         <input
-          type="text"
           className="modal__input"
+          type="text"
           name="diaryText"
           value={diaryText}
+          onChange={handleInputChange}
           id="diaryText"
           placeholder="Write your diary text here..."
           required
-          onChange={handleInputChange}
         />
       </label>
     </ModalWithForm>
