@@ -7,20 +7,21 @@ const RegisterModal = ({
   activeModal,
   handleCloseClick,
   handleRegistration,
+  errorMessage,
 }) => {
   const { values, handleChange, errors, isValid, resetForm } =
     useFormWithValidation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (isValid) {
-      handleRegistration(values)
-        .then(() => {
-          resetForm();
-          handleCloseClick();
-        })
-        .catch((err) => console.error("Registration failed:", err));
-    }
+    if (!isValid) return;
+
+    handleRegistration(values)
+      .then(() => {
+        resetForm();
+        handleCloseClick();
+      })
+      .catch((err) => console.error("Registration failed:", err));
   };
 
   return (
@@ -32,6 +33,10 @@ const RegisterModal = ({
       handleCloseClick={handleCloseClick}
       isDisabled={!isValid}
     >
+      {errorMessage && (
+        <div className="modal__error-message">{errorMessage}</div>
+      )}
+
       <label className="modal__label-form">
         Email
         <input
@@ -45,6 +50,7 @@ const RegisterModal = ({
         />
         <span className="modal__error">{errors.email}</span>
       </label>
+
       <label className="modal__label-form">
         Password *
         <input
@@ -58,6 +64,7 @@ const RegisterModal = ({
         />
         <span className="modal__error">{errors.password}</span>
       </label>
+
       <label className="modal__label-form">
         Name
         <input
@@ -71,6 +78,7 @@ const RegisterModal = ({
         />
         <span className="modal__error">{errors.name}</span>
       </label>
+
       <label className="modal__label-form">
         Avatar URL
         <input

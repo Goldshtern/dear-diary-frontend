@@ -29,6 +29,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
 
@@ -123,6 +124,7 @@ function App() {
 
   const handleRegistration = ({ name, avatarUrl, email, password }) => {
     setIsLoading(true);
+    setErrorMessage("");
     console.log("Attempting to register:", {
       name,
       avatarUrl,
@@ -134,7 +136,12 @@ function App() {
         console.log("Registration successful:", response);
         handleLogin({ email, password });
       })
-      .catch((err) => console.error("Error during registration:", err))
+      .catch((err) => {
+        console.error("Error during registration:", err);
+        setErrorMessage(
+          err.message || "Something went wrong. Please try again."
+        );
+      })
       .finally(() => setIsLoading(false));
   };
 
@@ -202,6 +209,7 @@ function App() {
               formData={formData}
               handleInputChange={handleInputChange}
               handleRegistration={handleRegistration}
+              errorMessage={errorMessage}
             />
           )}
           {activeModal === "login" && (
