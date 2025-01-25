@@ -1,28 +1,22 @@
 import React from "react";
 import "./LoginModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 
-const LoginModal = ({
-  activeModal,
-  handleCloseClick,
-  formData = { email: "", password: "" },
-  handleInputChange,
-  handleLogin,
-}) => {
-  const isFormValid = () => {
-    return formData.email && formData.password;
-  };
+const LoginModal = ({ activeModal, handleCloseClick, handleLogin }) => {
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormWithValidation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (isFormValid()) {
-      handleLogin(formData);
-    } else {
-      console.error("Form is invalid!");
+    if (isValid) {
+      handleLogin(values)
+        .then(() => {
+          resetForm();
+          handleCloseClick();
+        })
+        .catch((err) => console.error("Login failed:", err));
     }
-
-    handleCloseClick();
   };
 
   return (
@@ -32,6 +26,7 @@ const LoginModal = ({
       onSubmit={handleSubmit}
       activeModal={activeModal}
       handleCloseClick={handleCloseClick}
+      isDisabled={!isValid}
     >
       <label className="modal__label-form">
         Email
@@ -39,11 +34,12 @@ const LoginModal = ({
           type="email"
           className="modal__input"
           name="email"
-          value={formData.email}
-          onChange={handleInputChange}
+          value={values.email || ""}
+          onChange={handleChange}
           placeholder="email"
           required
         />
+        <span className="modal__error">{errors.email}</span>
       </label>
       <label className="modal__label-form">
         Password *
@@ -51,11 +47,12 @@ const LoginModal = ({
           type="password"
           className="modal__input"
           name="password"
-          value={formData.password}
-          onChange={handleInputChange}
+          value={values.password || ""}
+          onChange={handleChange}
           placeholder="Password"
           required
         />
+        <span className="modal__error">{errors.password}</span>
       </label>
     </ModalWithForm>
   );
