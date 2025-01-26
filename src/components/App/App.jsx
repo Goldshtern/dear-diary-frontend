@@ -8,6 +8,7 @@ import Profile from "../Profile/Profile";
 import AddDiaryModal from "../AddDiaryModal/AddDiaryModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../Login/LoginModal";
+import SuccessModal from "../SuccessModal/SuccessModal";
 import { getAdvice } from "../../utils/adviceApi";
 import { getPages, postPages } from "../../utils/api";
 import { signUp, signIn } from "../../utils/MainApi";
@@ -15,6 +16,7 @@ import { signUp, signIn } from "../../utils/MainApi";
 function App() {
   const [isAboutOpen, setAboutOpen] = useState(false);
   const [advice, setAdvice] = useState("");
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [activeModal, setActiveModal] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
   const [diaryEntries, setDiaryEntries] = useState([]);
@@ -107,6 +109,11 @@ function App() {
     }
   };
 
+  const handleLoginClickFromSuccess = () => {
+    setSuccessMessage("");
+    setActiveModal("login");
+  };
+
   useEffect(() => {
     if (!activeModal) return;
 
@@ -125,16 +132,11 @@ function App() {
   const handleRegistration = ({ name, avatarUrl, email, password }) => {
     setIsLoading(true);
     setErrorMessage("");
-    console.log("Attempting to register:", {
-      name,
-      avatarUrl,
-      email,
-      password,
-    });
+
     return signUp({ name, avatarUrl, email, password })
       .then((response) => {
         console.log("Registration successful:", response);
-        handleLogin({ email, password });
+        setIsSuccessModalOpen(true);
       })
       .catch((err) => {
         console.error("Error during registration:", err);
@@ -222,6 +224,16 @@ function App() {
             />
           )}
         </div>
+      )}
+      {isSuccessModalOpen && (
+        <SuccessModal
+          message="You have successfully registered!"
+          onClose={() => setIsSuccessModalOpen(false)}
+          onLoginClick={() => {
+            setIsSuccessModalOpen(false);
+            setActiveModal("login");
+          }}
+        />
       )}
     </div>
   );

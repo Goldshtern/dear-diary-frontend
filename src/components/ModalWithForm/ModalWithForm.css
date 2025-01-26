@@ -67,6 +67,26 @@
   padding-top: 8px;
 }
 
+.modal__radio-btns {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  padding: 0;
+  align-items: flex-start;
+  margin: 0;
+  color: #0000005d;
+  accent-color: #000;
+}
+.modal__legend {
+  padding-bottom: 12px;
+}
+.modal__radio-input {
+  margin-right: 5px;
+}
+.modal__label_type_radio {
+  padding-bottom: 8px;
+}
+
 .modal__submit {
   width: 124px;
   height: 36px;
