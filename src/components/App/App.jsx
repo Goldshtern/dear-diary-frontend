@@ -32,6 +32,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [loginErrorMessage, setLoginErrorMessage] = useState("");
 
   const navigate = useNavigate();
 
@@ -150,20 +151,28 @@ function App() {
   const handleLogin = ({ email, password }) => {
     console.log("Attempting to log in with:", { email, password });
     if (!email || !password) {
+      setLoginErrorMessage("Email and password are required."); // Validate before request
       return;
     }
 
-    setIsLoading(true);
+    setIsLoading(true); // Start loading state
+    setLoginErrorMessage(""); // Clear previous errors
+
     return signIn({ email, password })
       .then((userData) => {
         console.log("Login successful:", userData);
-        setCurrentUser(userData.user);
-        setIsLoggedIn(true);
-        closeActiveModal();
-        navigate("/profile");
+        setCurrentUser(userData.user); // Set user data
+        setIsLoggedIn(true); // Update login status
+        closeActiveModal(); // Close modal on success
+        navigate("/profile"); // Redirect to profile
       })
-      .catch((err) => console.error("Login failed:", err))
-      .finally(() => setIsLoading(false));
+      .catch((err) => {
+        console.error("Login failed:", err);
+        setLoginErrorMessage(
+          err.message || "Failed to log in. Please check your credentials."
+        ); // Show error message
+      })
+      .finally(() => setIsLoading(false)); // Stop loading state
   };
 
   return (
@@ -221,6 +230,7 @@ function App() {
               formData={formData || { email: "", password: "" }}
               handleInputChange={handleInputChange}
               handleLogin={handleLogin}
+              loginErrorMessage={loginErrorMessage}
             />
           )}
         </div>

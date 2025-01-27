@@ -3,7 +3,12 @@ import "./LoginModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 
-const LoginModal = ({ activeModal, handleCloseClick, handleLogin }) => {
+const LoginModal = ({
+  activeModal,
+  handleCloseClick,
+  handleLogin,
+  loginErrorMessage,
+}) => {
   const { values, handleChange, errors, isValid, resetForm } =
     useFormWithValidation();
 
@@ -12,10 +17,10 @@ const LoginModal = ({ activeModal, handleCloseClick, handleLogin }) => {
     if (isValid) {
       handleLogin(values)
         .then(() => {
-          resetForm();
+          resetForm(); // Reset form on success
           handleCloseClick();
         })
-        .catch((err) => console.error("Login failed:", err));
+        .catch((err) => console.error("Login failed:", err)); // Log additional errors if needed
     }
   };
 
@@ -28,6 +33,9 @@ const LoginModal = ({ activeModal, handleCloseClick, handleLogin }) => {
       handleCloseClick={handleCloseClick}
       isDisabled={!isValid}
     >
+      {loginErrorMessage && (
+        <div className="modal__error-message">{loginErrorMessage}</div>
+      )}
       <label className="modal__label-form">
         Email
         <input
