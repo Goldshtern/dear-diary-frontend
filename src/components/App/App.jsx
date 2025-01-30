@@ -10,15 +10,16 @@ import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../Login/LoginModal";
 import SuccessModal from "../SuccessModal/SuccessModal";
 import { getAdvice } from "../../utils/adviceApi";
-import { getPages, postPages } from "../../utils/api";
+import { getPages, postPages, getUserInfo } from "../../utils/api";
 import { signUp, signIn } from "../../utils/MainApi";
+import { setToken, getToken, removeToken } from "../../utils/token";
 
 function App() {
+  const [currentUser, setCurrentUser] = useState(null);
   const [isAboutOpen, setAboutOpen] = useState(false);
   const [advice, setAdvice] = useState("");
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [activeModal, setActiveModal] = useState("");
-  const [currentUser, setCurrentUser] = useState(null);
   const [diaryEntries, setDiaryEntries] = useState([]);
   const [diaryTitle, setDiaryTitle] = useState("");
   const [diaryText, setDiaryText] = useState("");
@@ -111,7 +112,7 @@ function App() {
   };
 
   const handleLoginClickFromSuccess = () => {
-    setSuccessMessage("");
+    setIsSuccessModalOpen(false);
     setActiveModal("login");
   };
 
@@ -130,49 +131,64 @@ function App() {
     };
   }, [activeModal]);
 
+  useEffect(() => {
+    const token = getToken();
+    if (token) {
+      getUserInfo(token)
+        .then((user) => {
+          setCurrentUser(user);
+          setIsLoggedIn(true);
+        })
+        .catch(() => {
+          removeToken();
+          setIsLoggedIn(false);
+        });
+    }
+  }, []);
+
+  const handleLogin = ({ email, password }) => {
+    if (!email || !password) {
+      setLoginErrorMessage("Email and password are required.");
+      return Promise.reject(new Error("Missing credentials"));
+    }
+
+    setIsLoading(true);
+    setLoginErrorMessage("");
+
+    return signIn({ email, password })
+      .then((userData) => {
+        localStorage.setItem("jwt", userData.token);
+        setCurrentUser(userData.user);
+        setIsLoggedIn(true);
+        closeActiveModal();
+        navigate("/profile");
+      })
+      .catch((err) => {
+        console.error("Login failed:", err);
+        setLoginErrorMessage(
+          err.message || "Failed to log in. Please try again."
+        );
+        return Promise.reject(err);
+      })
+      .finally(() => setIsLoading(false));
+  };
+
   const handleRegistration = ({ name, avatarUrl, email, password }) => {
     setIsLoading(true);
     setErrorMessage("");
 
     return signUp({ name, avatarUrl, email, password })
-      .then((response) => {
-        console.log("Registration successful:", response);
+      .then(() => {
         setIsSuccessModalOpen(true);
       })
       .catch((err) => {
-        console.error("Error during registration:", err);
-        setErrorMessage(
-          err.message || "Something went wrong. Please try again."
-        );
+        const message =
+          err.response?.data?.message ||
+          "Something went wrong. Please try again.";
+        setErrorMessage(message);
+        return Promise.reject(err);
       })
       .finally(() => setIsLoading(false));
-  };
-
-  const handleLogin = ({ email, password }) => {
-    console.log("Attempting to log in with:", { email, password });
-    if (!email || !password) {
-      setLoginErrorMessage("Email and password are required."); // Validate before request
-      return;
-    }
-
-    setIsLoading(true); // Start loading state
-    setLoginErrorMessage(""); // Clear previous errors
-
-    return signIn({ email, password })
-      .then((userData) => {
-        console.log("Login successful:", userData);
-        setCurrentUser(userData.user); // Set user data
-        setIsLoggedIn(true); // Update login status
-        closeActiveModal(); // Close modal on success
-        navigate("/profile"); // Redirect to profile
-      })
-      .catch((err) => {
-        console.error("Login failed:", err);
-        setLoginErrorMessage(
-          err.message || "Failed to log in. Please check your credentials."
-        ); // Show error message
-      })
-      .finally(() => setIsLoading(false)); // Stop loading state
   };
 
   return (
@@ -239,10 +255,7 @@ function App() {
         <SuccessModal
           message="You have successfully registered!"
           onClose={() => setIsSuccessModalOpen(false)}
-          onLoginClick={() => {
-            setIsSuccessModalOpen(false);
-            setActiveModal("login");
-          }}
+          onLoginClick={handleLoginClickFromSuccess}
         />
       )}
     </div>

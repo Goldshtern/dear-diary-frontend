@@ -17,10 +17,10 @@ const LoginModal = ({
     if (isValid) {
       handleLogin(values)
         .then(() => {
-          resetForm(); // Reset form on success
+          resetForm();
           handleCloseClick();
         })
-        .catch((err) => console.error("Login failed:", err)); // Log additional errors if needed
+        .catch((err) => console.error("Login failed:", err));
     }
   };
 
