@@ -13,6 +13,7 @@ import { getAdvice } from "../../utils/adviceApi";
 import { getPages, postPages } from "../../utils/api";
 import { signUp, signIn, getUserInfo } from "../../utils/MainApi";
 import { setToken, getToken, removeToken } from "../../utils/token";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -45,9 +46,14 @@ function App() {
 
   useEffect(() => {
     fetchAdvice();
+
     getPages()
-      .then((data) => setDiaryEntries(data))
-      .catch((err) => console.error("Error fetching diary pages:", err));
+      .then((data) => {
+        setDiaryEntries(data);
+      })
+      .catch((err) => {
+        console.error("Error fetching diary pages:", err);
+      });
   }, []);
 
   const handleInputChange = (e) => {
@@ -151,7 +157,7 @@ function App() {
           setIsLoggedIn(false);
         });
     }
-  }, []);
+  }, [isLoggedIn]);
 
   const handleLogin = ({ email, password }) => {
     if (!email || !password) {
@@ -198,74 +204,84 @@ function App() {
       .finally(() => setIsLoading(false));
   };
 
-  return (
-    <div className="page">
-      <div className="page__content">
-        <Header
-          isAboutOpen={isAboutOpen}
-          handleAboutToggle={() => setAboutOpen(!isAboutOpen)}
-          handleAddClick={() => setActiveModal("addDiary")}
-          handleRegisterClick={handleRegisterClick}
-          handleLoginClick={handleLoginClick}
-          isLoggedIn={isLoggedIn}
-        />
-        <Routes>
-          <Route
-            path="/"
-            element={<Main advice={advice} onRefresh={fetchAdvice} />}
-          />
-          <Route
-            path="/profile"
-            element={<Profile diaryEntries={diaryEntries.diaryPages} />}
-          />
-        </Routes>
-        <Footer />
-      </div>
+  const handleSignOutClick = () => {
+    removeToken();
+    setCurrentUser(null);
+    setIsLoggedIn(false);
+    navigate("/");
+  };
 
-      {activeModal && (
-        <div className="modal" onClick={handleOverlayClick}>
-          {activeModal === "addDiary" && (
-            <AddDiaryModal
-              activeModal={activeModal}
-              handleCloseClick={closeActiveModal}
-              diaryTitle={diaryTitle}
-              diaryText={diaryText}
-              imageUrl={imageUrl}
-              handleInputChange={handleInputChange}
-              handleAddDiary={handleAddDiary}
-              isLoading={isLoading}
+  return (
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="page">
+        <div className="page__content">
+          <Header
+            isAboutOpen={isAboutOpen}
+            handleAboutToggle={() => setAboutOpen(!isAboutOpen)}
+            handleAddClick={() => setActiveModal("addDiary")}
+            handleRegisterClick={handleRegisterClick}
+            handleLoginClick={handleLoginClick}
+            isLoggedIn={isLoggedIn}
+            handleSignOutClick={handleSignOutClick}
+          />
+          <Routes>
+            <Route
+              path="/"
+              element={<Main advice={advice} onRefresh={fetchAdvice} />}
             />
-          )}
-          {activeModal === "register" && (
-            <RegisterModal
-              activeModal={activeModal}
-              handleCloseClick={closeActiveModal}
-              formData={formData}
-              handleInputChange={handleInputChange}
-              handleRegistration={handleRegistration}
-              errorMessage={errorMessage}
+            <Route
+              path="/profile"
+              element={<Profile diaryEntries={diaryEntries.diaryPages} />}
             />
-          )}
-          {activeModal === "login" && (
-            <LoginModal
-              activeModal={activeModal}
-              handleCloseClick={closeActiveModal}
-              formData={formData || { email: "", password: "" }}
-              handleInputChange={handleInputChange}
-              handleLogin={handleLogin}
-              loginErrorMessage={loginErrorMessage}
-            />
-          )}
+          </Routes>
+          <Footer />
         </div>
-      )}
-      {isSuccessModalOpen && (
-        <SuccessModal
-          message="You have successfully registered!"
-          onClose={() => setIsSuccessModalOpen(false)}
-          onLoginClick={handleLoginClickFromSuccess}
-        />
-      )}
-    </div>
+
+        {activeModal && (
+          <div className="modal" onClick={handleOverlayClick}>
+            {activeModal === "addDiary" && (
+              <AddDiaryModal
+                activeModal={activeModal}
+                handleCloseClick={closeActiveModal}
+                diaryTitle={diaryTitle}
+                diaryText={diaryText}
+                imageUrl={imageUrl}
+                handleInputChange={handleInputChange}
+                handleAddDiary={handleAddDiary}
+                isLoading={isLoading}
+              />
+            )}
+            {activeModal === "register" && (
+              <RegisterModal
+                activeModal={activeModal}
+                handleCloseClick={closeActiveModal}
+                formData={formData}
+                handleInputChange={handleInputChange}
+                handleRegistration={handleRegistration}
+                errorMessage={errorMessage}
+              />
+            )}
+            {activeModal === "login" && (
+              <LoginModal
+                activeModal={activeModal}
+                handleCloseClick={closeActiveModal}
+                formData={formData || { email: "", password: "" }}
+                handleInputChange={handleInputChange}
+                handleLogin={handleLogin}
+                loginErrorMessage={loginErrorMessage}
+              />
+            )}
+          </div>
+        )}
+        {isSuccessModalOpen && (
+          <SuccessModal
+            message="You have successfully registered!"
+            onClose={() => setIsSuccessModalOpen(false)}
+            onLoginClick={handleLoginClickFromSuccess}
+          />
+        )}
+      </div>
+    </CurrentUserContext.Provider>
   );
 }
 

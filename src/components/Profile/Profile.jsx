@@ -3,7 +3,7 @@ import DiaryPage from "../DiaryPage/DiaryPage";
 import "./Profile.css";
 import Preloader from "../Preloader/Preloader";
 
-function Profile({ diaryEntries, error }) {
+function Profile({ diaryEntries = [], error }) {
   const [isLoading, setIsLoading] = useState(true);
   const [hasData, setHasData] = useState(false);
   const [hasError, setHasError] = useState(false);
@@ -26,8 +26,7 @@ function Profile({ diaryEntries, error }) {
     setVisibleEntries((prev) => prev + 3);
   };
 
-  const isShowMoreVisible =
-    diaryEntries && diaryEntries.length > visibleEntries;
+  const isShowMoreVisible = diaryEntries.length > visibleEntries;
 
   return (
     <>

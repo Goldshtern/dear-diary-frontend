@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Header.css";
 import logo from "../../assets/logo-diary.png";
-import avatar from "../../assets/avatar.png";
-import About from "../About/About";
 import { Link } from "react-router-dom";
+import About from "../About/About";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function Header({
   isAboutOpen,
@@ -11,7 +11,11 @@ function Header({
   handleAddClick,
   handleRegisterClick,
   handleLoginClick,
+  handleSignOutClick,
+  isLoggedIn,
 }) {
+  const currentUser = useContext(CurrentUserContext);
+
   return (
     <header className="header">
       <div className="header__logo-and-title">
@@ -43,26 +47,46 @@ function Header({
         >
           + Add diary page
         </button>
-        <button
-          onClick={handleRegisterClick}
-          type="button"
-          className="header__register-btn"
-        >
-          Register
-        </button>
-        <button
-          onClick={handleLoginClick}
-          type="button"
-          className="header__register-btn"
-        >
-          Login
-        </button>
-        <Link to="/profile">
-          <div className="header__user-container">
-            <p className="header__username">Aleksandr Goldshtern</p>
-            <img className="header__avatar" src={avatar} alt="User Avatar" />
-          </div>
-        </Link>
+
+        {currentUser && currentUser.name ? (
+          <Link to="/profile">
+            <div className="header__user-container">
+              <p className="header__username">{currentUser.name}</p>
+              <img
+                className="header__avatar"
+                src={currentUser.avatarUrl}
+                alt={currentUser.name}
+              />
+            </div>
+          </Link>
+        ) : (
+          <>
+            <button
+              onClick={handleRegisterClick}
+              type="button"
+              className="header__register-btn"
+            >
+              Register
+            </button>
+            <button
+              onClick={handleLoginClick}
+              type="button"
+              className="header__register-btn"
+            >
+              Login
+            </button>
+          </>
+        )}
+
+        {isLoggedIn && (
+          <button
+            onClick={handleSignOutClick}
+            type="button"
+            className="header__sign-out-btn"
+          >
+            Sign Out
+          </button>
+        )}
       </div>
     </header>
   );
