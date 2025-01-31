@@ -14,6 +14,7 @@ import { getPages, postPages } from "../../utils/api";
 import { signUp, signIn, getUserInfo } from "../../utils/MainApi";
 import { setToken, getToken, removeToken } from "../../utils/token";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -231,7 +232,14 @@ function App() {
             />
             <Route
               path="/profile"
-              element={<Profile diaryEntries={diaryEntries.diaryPages} />}
+              element={
+                <ProtectedRoute
+                  isLoggedIn={isLoggedIn}
+                  setActiveModal={setActiveModal}
+                >
+                  <Profile diaryEntries={diaryEntries.diaryPages} />
+                </ProtectedRoute>
+              }
             />
           </Routes>
           <Footer />
