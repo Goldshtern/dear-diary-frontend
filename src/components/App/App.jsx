@@ -68,6 +68,7 @@ function App() {
   };
 
   const handleAddDiary = () => {
+    const token = getToken();
     setIsLoading(true);
 
     const newDiaryEntry = {
@@ -75,6 +76,7 @@ function App() {
       title: diaryTitle,
       text: diaryText,
       imageUrl: imageUrl,
+      token,
     };
 
     return postPages(
@@ -83,7 +85,12 @@ function App() {
       newDiaryEntry.imageUrl
     )
       .then(() => {
-        setDiaryEntries((prevEntries) => [...prevEntries, newDiaryEntry]);
+        setDiaryEntries((prevEntries) =>
+          Array.isArray(prevEntries)
+            ? [...prevEntries, newDiaryEntry]
+            : [newDiaryEntry]
+        );
+
         setDiaryTitle("");
         setDiaryText("");
         setImageUrl("");
@@ -209,7 +216,7 @@ function App() {
           />
           <Route
             path="/profile"
-            element={<Profile diaryEntries={diaryEntries} />}
+            element={<Profile diaryEntries={diaryEntries.diaryPages} />}
           />
         </Routes>
         <Footer />
