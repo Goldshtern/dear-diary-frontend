@@ -12,7 +12,7 @@ import SuccessModal from "../SuccessModal/SuccessModal";
 import { getAdvice } from "../../utils/adviceApi";
 import { getPages, postPages } from "../../utils/api";
 import { signUp, signIn, getUserInfo } from "../../utils/MainApi";
-import { setToken, getToken, removeToken } from "../../utils/token";
+import { getToken, removeToken } from "../../utils/token";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
