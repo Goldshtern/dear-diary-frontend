@@ -10,8 +10,8 @@ import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../Login/LoginModal";
 import SuccessModal from "../SuccessModal/SuccessModal";
 import { getAdvice } from "../../utils/adviceApi";
-import { getPages, postPages, getUserInfo } from "../../utils/api";
-import { signUp, signIn } from "../../utils/MainApi";
+import { getPages, postPages } from "../../utils/api";
+import { signUp, signIn, getUserInfo } from "../../utils/MainApi";
 import { setToken, getToken, removeToken } from "../../utils/token";
 
 function App() {

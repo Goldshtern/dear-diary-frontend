@@ -35,16 +35,3 @@ function postPages(title, text, imageUrl) {
 }
 
 export { postPages };
-
-function getUserInfo() {
-  const token = getToken();
-  return fetch(`${BASE_URL}/users/me`, {
-    method: "GET",
-    headers: {
-      authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-  }).then(checkResponse);
-}
-
-export { getUserInfo };

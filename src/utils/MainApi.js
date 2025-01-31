@@ -1,5 +1,5 @@
 import { checkResponse } from "./api";
-
+import { getToken } from "./token";
 import { BASE_URL } from "../utils/constants";
 
 function signUp({ name, avatarUrl, email, password }) {
@@ -25,3 +25,16 @@ function signIn({ email, password }) {
 }
 
 export { signIn };
+
+function getUserInfo() {
+  const token = getToken();
+  return fetch(`${BASE_URL}/users/me`, {
+    method: "GET",
+    headers: {
+      authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  }).then(checkResponse);
+}
+
+export { getUserInfo };
