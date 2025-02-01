@@ -1,10 +1,17 @@
+import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
 function ProtectedRoute({ isLoggedIn, setActiveModal, children }) {
+  useEffect(() => {
+    if (!isLoggedIn) {
+      setActiveModal("login");
+    }
+  }, [isLoggedIn, setActiveModal]);
+
   if (!isLoggedIn) {
-    setActiveModal("login");
     return <Navigate to="/" replace />;
   }
+
   return children;
 }
 
