@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "start": "json-server --watch db.json --port 3001",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "npm run build && scp -r ./dist/* alexg020573@mydd.crabdance.com:/home/alexg020573/frontend"
   },
   "dependencies": {
     "react": "^18.3.1",
