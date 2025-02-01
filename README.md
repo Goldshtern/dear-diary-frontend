@@ -100,4 +100,8 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 https://goldshtern.github.io/dear-diary-frontend/
 
+## Deployed on
+
+https://mydd.crabdance.com
+
 Thank you for exploring My Dear Diary App! Feel free to contribute, provide feedback, or share your thoughts. Happy journaling!
