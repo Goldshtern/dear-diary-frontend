@@ -40,13 +40,15 @@ function Header({
           </button>
           <About isOpen={isAboutOpen} onClose={handleAboutToggle} />
         </div>
-        <button
-          onClick={handleAddClick}
-          type="button"
-          className="header__add-diary-page-btn"
-        >
-          + Add diary page
-        </button>
+        {isLoggedIn && (
+          <button
+            onClick={handleAddClick}
+            type="button"
+            className="header__add-diary-page-btn"
+          >
+            + Add diary page
+          </button>
+        )}
 
         {currentUser && currentUser.name ? (
           <Link to="/profile">
