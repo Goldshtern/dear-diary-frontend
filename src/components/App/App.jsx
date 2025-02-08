@@ -79,7 +79,6 @@ function App() {
     setIsLoading(true);
 
     const newDiaryEntry = {
-      _id: Date.now(),
       title: diaryTitle,
       text: diaryText,
       imageUrl: imageUrl,
@@ -91,11 +90,11 @@ function App() {
       newDiaryEntry.text,
       newDiaryEntry.imageUrl
     )
-      .then(() => {
+      .then((addedEntry) => {
         setDiaryEntries((prevEntries) =>
           Array.isArray(prevEntries)
-            ? [...prevEntries, newDiaryEntry]
-            : [newDiaryEntry]
+            ? [...prevEntries, addedEntry]
+            : [addedEntry]
         );
 
         setDiaryTitle("");
@@ -237,7 +236,7 @@ function App() {
                   isLoggedIn={isLoggedIn}
                   setActiveModal={setActiveModal}
                 >
-                  <Profile diaryEntries={diaryEntries.diaryPages} />
+                  <Profile diaryEntries={diaryEntries} />
                 </ProtectedRoute>
               }
             />
