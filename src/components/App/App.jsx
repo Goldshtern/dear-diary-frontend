@@ -151,13 +151,16 @@ function App() {
         .then((user) => {
           setCurrentUser(user);
           setIsLoggedIn(true);
+          setActiveModal("");
         })
         .catch(() => {
           removeToken();
           setIsLoggedIn(false);
         });
+    } else {
+      setIsLoggedIn(false);
     }
-  }, [isLoggedIn]);
+  }, []);
 
   const handleLogin = ({ email, password }) => {
     if (!email || !password) {

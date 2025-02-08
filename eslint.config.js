@@ -14,7 +14,7 @@ export default [
       ecmaVersion: "latest",
       globals: {
         ...globals.browser,
-        process: "readonly", // Add this line to allow process to be recognized
+        process: "readonly",
       },
       parserOptions: {
         ecmaFeatures: { jsx: true },
