@@ -160,7 +160,7 @@ function App() {
     } else {
       setIsLoggedIn(false);
     }
-  }, []);
+  }, [isLoggedIn]);
 
   const handleLogin = ({ email, password }) => {
     if (!email || !password) {
