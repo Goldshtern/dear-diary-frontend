@@ -50,7 +50,8 @@ function App() {
 
     getPages()
       .then((data) => {
-        setDiaryEntries(data);
+        console.log("Fetched diary entries:", data);
+        setDiaryEntries(data.diaryPages);
       })
       .catch((err) => {
         console.error("Error fetching diary pages:", err);
