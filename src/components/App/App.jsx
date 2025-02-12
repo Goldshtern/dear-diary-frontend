@@ -179,6 +179,12 @@ function App() {
         setIsLoggedIn(true);
         closeActiveModal();
         navigate("/profile");
+
+        return getPages();
+      })
+      .then((data) => {
+        console.log("Fetched diary entries after login:", data);
+        setDiaryEntries(data.diaryPages);
       })
       .catch((err) => {
         console.error("Login failed:", err);
