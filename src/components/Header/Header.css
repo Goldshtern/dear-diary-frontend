@@ -1,0 +1,190 @@
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 5%;
+  box-sizing: border-box;
+}
+
+.header__logo-and-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+
+.header__logo {
+  max-width: 80px;
+  height: auto;
+}
+
+.header__title-container {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 1;
+}
+
+.header__title {
+  font-family: "Playfair Display", "Poppins", sans-serif;
+  font-size: 3vw;
+  color: blue;
+  margin: 0;
+}
+
+.header__date {
+  font-family: "DM Sans", "Space Grotesk", sans-serif;
+  font-size: 1.2vw;
+  color: darkred;
+  font-weight: 700;
+}
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.header__about-wrapper {
+  position: relative;
+}
+
+.header__about-btn,
+.header__register-btn,
+.header__sign-out-btn {
+  font-family: "DM Sans", sans-serif;
+  font-size: 1vw;
+  font-weight: 700;
+  color: #0044cc;
+  border: 2px solid #0044cc;
+  border-radius: 4px;
+  background: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.header__about-btn:hover,
+.header__register-btn:hover,
+.header__sign-out-btn:hover {
+  background-color: #0044cc;
+  color: white;
+}
+
+.header__add-diary-page-btn {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 700;
+  color: #333;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+}
+
+.header__user-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .header__logo {
+    max-width: 100px;
+  }
+
+  .header__logo-and-title {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .header__title {
+    font-size: 6vw;
+  }
+
+  .header__date {
+    font-size: 4vw;
+  }
+
+  .header__actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .header__about-btn,
+  .header__register-btn,
+  .header__sign-out-btn {
+    font-size: 3vw;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .header__add-diary-page-btn {
+    font-size: 3vw;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .header__user-container {
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .header {
+    padding: 10px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .header__logo {
+    max-width: 80px;
+  }
+
+  .header__logo-and-title {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .header__title {
+    font-size: 8vw;
+  }
+
+  .header__date {
+    font-size: 5vw;
+  }
+
+  .header__actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .header__about-btn,
+  .header__register-btn,
+  .header__sign-out-btn {
+    font-size: 3vw;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .header__add-diary-page-btn {
+    font-size: 3vw;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .header__user-container {
+    margin-top: 0.5rem;
+  }
+}
