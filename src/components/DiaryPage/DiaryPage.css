@@ -35,6 +35,29 @@
   text-align: left;
 }
 
+.diary-page__delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.diary-page__delete img {
+  width: 30px;
+  height: auto;
+  background-color: #333;
+}
+
+.diary-page__delete:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
 @media (max-width: 600px) {
   .diary-page {
     padding: 1rem;
