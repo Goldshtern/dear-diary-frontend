@@ -10,7 +10,7 @@ import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../Login/LoginModal";
 import SuccessModal from "../SuccessModal/SuccessModal";
 import { getAdvice } from "../../utils/adviceApi";
-import { getPages, postPages } from "../../utils/api";
+import { getPages, postPages, deletePage } from "../../utils/api";
 import { signUp, signIn, getUserInfo } from "../../utils/MainApi";
 import { getToken, removeToken } from "../../utils/token";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
@@ -105,6 +105,17 @@ function App() {
       })
       .catch((err) => console.error("Error adding new item:", err))
       .finally(() => setIsLoading(false));
+  };
+
+  const handleDeleteDiary = (id) => {
+    deletePage(id)
+      .then(() => {
+        console.log("Deleted diary entry:", id);
+        setDiaryEntries((prevEntries) =>
+          prevEntries.filter((entry) => entry._id !== id)
+        );
+      })
+      .catch((err) => console.error("Error deleting diary page:", err));
   };
 
   const handleRegisterClick = () => {
@@ -246,7 +257,10 @@ function App() {
                   isLoggedIn={isLoggedIn}
                   setActiveModal={setActiveModal}
                 >
-                  <Profile diaryEntries={diaryEntries} />
+                  <Profile
+                    diaryEntries={diaryEntries}
+                    onDelete={handleDeleteDiary}
+                  />
                 </ProtectedRoute>
               }
             />

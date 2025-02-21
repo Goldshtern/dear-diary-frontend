@@ -3,7 +3,7 @@ import DiaryPage from "../DiaryPage/DiaryPage";
 import "./Profile.css";
 import Preloader from "../Preloader/Preloader";
 
-function Profile({ diaryEntries = [], error }) {
+function Profile({ diaryEntries = [], error, onDelete }) {
   const [isLoading, setIsLoading] = useState(true);
   const [visibleEntries, setVisibleEntries] = useState(3);
 
@@ -35,7 +35,7 @@ function Profile({ diaryEntries = [], error }) {
           <>
             <ul className="profile__diaries-list">
               {entries.slice(0, visibleEntries).map((entry) => (
-                <DiaryPage key={entry._id} item={entry} />
+                <DiaryPage key={entry._id} item={entry} onDelete={onDelete} />
               ))}
             </ul>
             {isShowMoreVisible && (

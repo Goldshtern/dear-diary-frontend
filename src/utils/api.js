@@ -35,3 +35,16 @@ function postPages(title, text, imageUrl) {
 }
 
 export { postPages };
+function deletePage(_id) {
+  console.log("Deleting page with ID:", _id);
+  const token = getToken();
+  return fetch(`${BASE_URL}/pages/${_id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  }).then(checkResponse);
+}
+
+export { deletePage };
